@@ -49,8 +49,8 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <input type="text" name="post_office" placeholder="Post office" required autofocus>
-                        @error('post_office')
+                        <input type="text" name="thana" placeholder="Your related Thana" required autofocus>
+                        @error('thana')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
