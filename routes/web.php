@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\UserRecordController;
+Route::get('/', function () {
+    return view('index');
+});
 
-Route::get('/', [UserRecordController::class, 'index']);
+Auth::routes();
 
-// USer Registraion routes
-Route::get('/registration', [UserRecordController::class, 'create']);
-Route::post('/registration', [UserRecordController::class, 'store']);
+// user authetication routes
+Route::get('/register', 'UserRecordController@create');
+Route::post('/register', 'UserRecordController@store');
+Route::get('/login', function() {
+    return view('login.index');
+});
+Route::post('/login','UserRecordController@login');

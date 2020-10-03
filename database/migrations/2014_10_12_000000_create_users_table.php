@@ -17,18 +17,19 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->mediumText('image');
-            $table->string('mobile_number');
+            $table->string('mobile_number')->unique();
             $table->string('fathers_name');
             $table->string('mothers_name');
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('thana');
-            $table->string('token');
             $table->string('NID_or_birth_certificate_number');
             $table->mediumText('nid_image');
             $table->string('nominee_name')->nullable();
             $table->string('nominee_nid')->nullable();
             $table->string('refer_account_number')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

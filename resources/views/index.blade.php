@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <!-- Hero Section end -->
 	<section class="hero-section">
 		<div class="container">

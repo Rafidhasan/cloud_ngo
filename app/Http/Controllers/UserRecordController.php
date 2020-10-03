@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
 
-use App\Models\User;
+use Auth;
+
+use App\User;
 
 class UserRecordController extends Controller
 {
@@ -34,6 +36,7 @@ class UserRecordController extends Controller
          if($request->refer_account_number == null) {
             $user = new User();
             $date = $request->date_of_birth;
+            $token = Str::random(5);
 
             $user->name = $request->input('name');
             $user->mobile_number = $request->input('mobile_number');
@@ -43,7 +46,7 @@ class UserRecordController extends Controller
             $user->address = $request->input('address');
             $user->thana = $request->input('thana');
             $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
-            $user->token = Str::random(5);
+            $user->password = \Hash::make($token);
             $user->refer_account_number = null;
 
 
@@ -70,9 +73,26 @@ class UserRecordController extends Controller
             }
 
             $user->save();
-            dd('added');
+            return redirect('/')->with('status', 'You are added. Your password is '.$token.' You can see your password in profile');
          }  else {
 
          }
+    }
+
+    public function login(Request $request) {
+        $request->validate([
+            'mobile_number' => 'required',
+            'password' => 'required'
+        ]);
+        $password = \Hash::make($request->password);
+
+        $credentials = $request->only('mobile_number', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            dd('gg');
+        }else{
+            dd('not working');
+        }
     }
 }

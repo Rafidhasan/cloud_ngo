@@ -11,7 +11,7 @@
             </div>
 			<div class="row">
 				<div class="col-lg-12">
-					<form class="hero-form" method="post" action="/registration" enctype="multipart/form-data">
+					<form class="hero-form" method="post" action="/register" enctype="multipart/form-data">
                         @csrf
                         <input type="text" name="name" placeholder="Your Name"  required autofocus>
                         @error('name')
@@ -54,7 +54,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <label for="nid_image" class="text-white">Your NID Card / Birth Certificate image Image</label>
+                        <label for="nid_image" class="text-white">Your NID Card / Birth Certificate Image</label>
                         <input type="file" name="nid_image" class="form-control-file" required>
                         @error('nid_image')
                             <span class="text-danger">{{ $message }}</span>

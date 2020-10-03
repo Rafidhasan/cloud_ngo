@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>LOANS2GO | Loans HTML Template</title>
+	<title>NGO</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="loans HTML Template">
 	<meta name="keywords" content="loans, html">
@@ -36,6 +36,15 @@
 		<div class="loader"></div>
     </div>
 
+    @if (session('status'))
+    <div class="alert alert-primary" role="alert" style="z-index: 9999">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h3>{{ session('status') }}</h3>
+      </div>
+    @endif
+
     <!-- Header Section -->
 	<header class="header-section">
 		<a href="index.html" class="site-logo">
@@ -44,7 +53,7 @@
 		<nav class="header-nav">
 			<ul class="main-menu">
 				<li><a href="index.html" class="active">Home</a></li>
-				<li><a href="/registration">Registration</a></li>
+				<li><a href="/register">Registration</a></li>
 				<li><a href="/login">Login</a>
 				<li><a href="/contact">Contact</a></li>
 			</ul>
