@@ -26,3 +26,8 @@ Route::get('/login', function() {
     return view('login.index');
 });
 Route::post('/login','UserRecordController@login');
+
+//user profile routes
+Route::get('/profile/{id}','UserRecordController@show');
+
+//

@@ -5,30 +5,23 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="loans HTML Template">
 	<meta name="keywords" content="loans, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Favicon -->
 	<link href="img/favicon.ico" rel="shortcut icon"/>
 
-	<!-- Google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/flaticon.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/flaticon.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/slicknav.min.css') }}"/>
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
-
-
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
+	<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
 <body>
 	<!-- Page Preloder -->
@@ -48,17 +41,21 @@
     <!-- Header Section -->
 	<header class="header-section">
 		<a href="index.html" class="site-logo">
-			<img src="img/logo.png" alt="">
+			<img src="{{ asset('img/logo.png') }}" alt="">
 		</a>
 		<nav class="header-nav">
 			<ul class="main-menu">
-				<li><a href="index.html" class="active">Home</a></li>
-				<li><a href="/register">Registration</a></li>
-				<li><a href="/login">Login</a>
+                <li><a href="index.html" class="active">Home</a></li>
+                @guest
+                    <li><a href="/register">Registration</a></li>
+                    <li><a href="/login">Login</a>
+                @else
+                    <li><a class="text-white" href="/profile/{{ Auth::user()->id }}" role="button">{{ Auth::user()->name }}'s Profile</a></li>
+                @endguest
 				<li><a href="/contact">Contact</a></li>
 			</ul>
 			<div class="header-right">
-				<a href="#" class="hr-btn"><i class="flaticon-029-telephone-1"></i>Call us now! </a>
+				<a href="#" class="hr-btn"><i class="flaticon-029-telephone-1"></i>Call us now!</a>
 				<div class="hr-btn hr-btn-2">+45 332 65767 42</div>
 			</div>
 		</nav>
@@ -136,12 +133,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<!-- Footer Section end -->
 
 	<!--====== Javascripts & Jquery ======-->
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.slicknav.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('js/jquery.slicknav.min.js') }}"></script>
+	<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+	<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+	<script src="{{ asset('js/main.js') }}"></script>
 
 	</body>
 </html>

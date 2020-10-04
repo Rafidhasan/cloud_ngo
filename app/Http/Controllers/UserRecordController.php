@@ -90,9 +90,16 @@ class UserRecordController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            dd('gg');
+            return redirect('/');
         }else{
-            dd('not working');
+            return redirect()->back();
         }
+    }
+
+    public function show(Request $request) {
+        $user = User::where('id', $request->id)->first();
+        return view('userProfile.index', [
+            'user'=>$user
+        ]);
     }
 }
