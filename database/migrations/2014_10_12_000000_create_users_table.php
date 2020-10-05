@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->mediumText('image');
-            $table->string('mobile_number')->unique();
+            $table->string('mobile_number');
             $table->string('fathers_name');
             $table->string('mothers_name');
             $table->date('date_of_birth');

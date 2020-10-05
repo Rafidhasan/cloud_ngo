@@ -102,4 +102,39 @@ class UserRecordController extends Controller
             'user'=>$user
         ]);
     }
+
+    public function update(Request $request) {
+        $id = $request->id;
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->mobile_number = $request->mobile_number;
+        $user->fathers_name = $request->fathers_name;
+        $user->mothers_name = $request->mothers_name;
+        $user->date_of_birth =  $request->date_of_birth;
+        $user->address = $request->address;
+        $user->thana = $request->thana;
+        $user->nominee_name = $request->nominee_name;
+        $user->nominee_nid = $request->nominee_nid;
+        $user->NID_or_birth_certificate_number = $request->NID_or_birth_certificate_number;
+        $user->refer_account_number = $request->refer_account_number;
+        $user->password = User::select('password')->where('id', $request->id)->first();
+
+        if($request->image == '') {
+            $image = User::select('image')->where('id', $request->id)->first();
+            $user->image = $image->image;
+        }   else {
+            $user->image = $request->image;
+        }
+
+        if($request->nid_image == '') {
+            $nid_image = User::select('nid_image')->where('id', $request->id)->first();
+            $user->nid_image = $nid_image->nid_image;
+        }   else {
+            $user->nid_image = $request->nid_image;
+        }
+
+        $user->save();
+        return redirect('/')->with('success', 'Your Information has updated');
+    }
 }

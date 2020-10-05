@@ -29,5 +29,6 @@ Route::post('/login','UserRecordController@login');
 
 //user profile routes
 Route::get('/profile/{id}','UserRecordController@show');
+Route::patch('/update/{id}', 'UserRecordController@update');
 
 //
