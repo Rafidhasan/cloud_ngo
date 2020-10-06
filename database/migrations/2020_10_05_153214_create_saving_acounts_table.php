@@ -15,6 +15,11 @@ class CreateSavingAcountsTable extends Migration
     {
         Schema::create('saving_acounts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('mobile_number');
+            $table->string('tracking_number');
+            $table->integer('amount');
+            $table->integer('total');
             $table->timestamps();
         });
     }

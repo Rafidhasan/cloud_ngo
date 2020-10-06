@@ -51,6 +51,7 @@
                     <li><a href="/login">Login</a>
                 @else
                     <li><a class="text-white" href="/profile/{{ Auth::user()->id }}" role="button">{{ Auth::user()->name }}'s Profile</a></li>
+                    <li><a class="text-white" href="/logout" role="submit">Logout</a></li>
                 @endguest
 				<li><a href="/contact">Contact</a></li>
 			</ul>

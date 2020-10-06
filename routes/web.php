@@ -25,10 +25,14 @@ Route::post('/register', 'UserRecordController@store');
 Route::get('/login', function() {
     return view('login.index');
 });
+Route::get('/logout', 'UserRecordController@logout');
+
 Route::post('/login','UserRecordController@login');
 
 //user profile routes
 Route::get('/profile/{id}','UserRecordController@show');
 Route::patch('/update/{id}', 'UserRecordController@update');
 
-//
+//saving form routes
+Route::post('/saving/{id}', 'SavingAcountController@store');
+Route::post('/saving', 'SavingAcountController@store');

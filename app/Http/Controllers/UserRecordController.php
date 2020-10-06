@@ -96,6 +96,12 @@ class UserRecordController extends Controller
         }
     }
 
+    public function logout() {
+         auth()->logout();
+
+         return redirect('/');
+    }
+
     public function show(Request $request) {
         $user = User::where('id', $request->id)->first();
         return view('userProfile.index', [
