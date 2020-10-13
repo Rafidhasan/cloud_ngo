@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSavingAcountsTable extends Migration
+class CreateServiceChrgsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateSavingAcountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('saving_acounts', function (Blueprint $table) {
+        Schema::create('service_chrgs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('mobile_number');
-            $table->string('method');
-            $table->string('tracking_number');
-            $table->integer('amount');
-            $table->integer('total');
-            $table->boolean('approved')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -33,6 +29,6 @@ class CreateSavingAcountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saving_acounts');
+        Schema::dropIfExists('service_chrgs');
     }
 }

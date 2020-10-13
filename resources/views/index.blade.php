@@ -19,6 +19,15 @@
                         @else
                         <form class="hero-form" method="post" action="/saving">
                             @csrf
+                            <div class="form-group">
+                                <label class="text-white">Payment Method</label>
+                                <select name="method" class="form-control">
+                                  <option value="bikash">Bikash</option>
+                                  <option value="nogod">Nogod</option>
+                                  <option value="rocket">Rocket</option>
+                                  <option value="bank">Bank</option>
+                                </select>
+                            </div>
                             <input type="text" name="phone_number" placeholder="Enter Mobile Number"  required autofocus>
                             @error('phone_number')
                                 <span class="text-danger">{{ $message }}</span>
@@ -31,7 +40,7 @@
                             @error('amount')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <input type="password" name="password" placeholder="Enter Passweord" required autofocus>
+                            <input type="password" name="password" placeholder="Enter Password" required autofocus>
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -228,7 +237,7 @@
 			<img src="img/hand.png" alt="" class="hand-img">
 		</div>
 	</section>
-	<!-- Score Section end -->
+    <!-- Score Section end -->
 @endsection
 
 

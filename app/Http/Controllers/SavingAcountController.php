@@ -23,24 +23,20 @@ class SavingAcountController extends Controller
                 $savings->user_id = $user->id;
                 $savings->mobile_number = $user->mobile_number;
                 $savings->tracking_number = $request->tracking_number;
+                $savings->method = $request->method;
                 $savings->amount = $request->amount;
                 $row = count(SavingAcount::select('amount')->where('user_id', $user->id)->get());
 
                 if($row == 0) {
                     $savings->total = $request->amount;
                 }   else {
-                    $prev_amounts = SavingAcount::select('amount')->where('user_id', $user->id)->get();
-
-                    foreach($prev_amounts as $amount) {
-                        $total = $request->amount + $amount->amount;
-                    }
-
-                    $savings->total = $total;
+                    $prev_amount = SavingAcount::select('total')->where('user_id', $user->id)->latest()->first();
+                    $savings->total = $request->amount + $prev_amount->total;
                 }
 
                 $savings->save();
 
-                return redirect('/')->with('status', 'You Saving is added');
+                return redirect('/')->with('status', 'You Saving is added. Wait for authority to approve');
             }   else {
                 return redirect('/')->with('status', 'Your Password is Incorrect');
             }
@@ -56,23 +52,19 @@ class SavingAcountController extends Controller
                 $savings->mobile_number = $user->mobile_number;
                 $savings->tracking_number = $request->tracking_number;
                 $savings->amount = $request->amount;
+                $savings->method = $request->method;
                 $row = count(SavingAcount::select('amount')->where('user_id', $user->id)->get());
 
                 if($row == 0) {
                     $savings->total = $request->amount;
                 }   else {
-                    $prev_amounts = SavingAcount::select('amount')->where('user_id', $user->id)->get();
-
-                    foreach($prev_amounts as $amount) {
-                        $total = $request->amount + $amount->amount;
-                    }
-
-                    $savings->total = $total;
+                    $prev_amount = SavingAcount::select('total')->where('user_id', $user->id)->latest()->first();
+                    $savings->total = $request->amount + $prev_amount->total;
                 }
 
                 $savings->save();
 
-                return redirect('/')->with('status', 'You Saving is added');
+                return redirect('/')->with('status', 'You Saving is added. Wait for Authority to approve');
             }   else {
                 return redirect('/')->with('status', 'Your Password is Incorrect');
             }

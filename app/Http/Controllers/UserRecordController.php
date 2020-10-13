@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 
 use Auth;
 
+use App\SavingAcount;
+
+use App\ServiceCharge;
+
 use App\User;
 
 class UserRecordController extends Controller
@@ -47,7 +51,7 @@ class UserRecordController extends Controller
             $user->thana = $request->input('thana');
             $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
             $user->password = \Hash::make($token);
-            $user->refer_account_number = null;
+            $user->refer_account_number = $request->refer_account_number;
 
 
             if($request->hasFile('image')) {
@@ -73,9 +77,48 @@ class UserRecordController extends Controller
             }
 
             $user->save();
-            return redirect('/')->with('status', 'You are added. Your password is '.$token.' You can see your password in profile');
+            return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
          }  else {
+            $user = new User();
+            $date = $request->date_of_birth;
+            $token = Str::random(5);
 
+            $user->name = $request->input('name');
+            $user->mobile_number = $request->input('mobile_number');
+            $user->fathers_name = $request->input('fathers_name');
+            $user->mothers_name = $request->input('mothers_name');
+            $user->date_of_birth =  $request->date_of_birth;
+            $user->address = $request->input('address');
+            $user->thana = $request->input('thana');
+            $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
+            $user->password = \Hash::make($token);
+            $user->refer_account_number = $request->refer_account_number;
+
+
+            if($request->hasFile('image')) {
+                $user_file = $request->file('image');
+                $extension = $user_file->getClientOriginalExtension();
+                $fileName = time() . '.' .$extension;
+                $user_file->move('storage/profile-image', $fileName);
+                $user->image = $fileName;
+            }   else {
+                return $request;
+                $user->image = ' ';
+            }
+
+            if($request->hasFile('nid_image')) {
+                $nid_file = $request->file('nid_image');
+                $extension = $nid_file->getClientOriginalExtension();
+                $fileName = time() . '.' .$extension;
+                $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
+                $user->nid_image = $fileName;
+            }   else {
+                return $request;
+                $user->nid_image = ' ';
+            }
+
+            $user->save();
+            return redirect('/')->with('status', 'Thanks for Registration. your password is '.$token.'Wait for admin approval');
          }
     }
 
@@ -86,15 +129,22 @@ class UserRecordController extends Controller
         ]);
         $password = \Hash::make($request->password);
 
+        $user = User::where("mobile_number", $request->mobile_number)->first();
+
         $credentials = $request->only('mobile_number', 'password');
 
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect('/');
-        }else{
-            return redirect()->back();
+        if($user->approved == 1) {
+            if (Auth::attempt($credentials)) {
+                // Authentication passed...
+                return redirect('/');
+            }else{
+                return redirect('/login')->with('status', 'Incorrect Password');
+            }
+        }   else {
+            return redirect('/login')->with('status', 'wait for authority to approve');
         }
     }
+
 
     public function logout() {
          auth()->logout();

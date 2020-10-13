@@ -27,4 +27,32 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles() {
+        return $this->belongsToMany('App\Role');
+    }
+
+    public function checkAdmin() {
+        return $this->roles->flatten()->pluck('name')->first();
+    }
+
+    public function checkRole() {
+        return $this->roles->flatten()->pluck('id')->first();
+    }
+
+    public function savings() {
+        return $this->hasMany('App\SavingAcount');
+    }
+
+    public function checkTotal() {
+        return $this->savings->flatten()->pluck('total')->last();
+    }
+
+    public function hasSavings() {
+        return $this->savings->flatten()->pluck('user_id')->last();
+    }
+
+    public function savingAmount() {
+        return $this->savings->flatten()->pluck('total')->last();
+    }
 }
