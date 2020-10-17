@@ -48,10 +48,6 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <input id="installment" type="text" name="installment" placeholder="Enter your installment months" required autofocus>
-                        @error('installment')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
                         <h5 class="text-white">Per Installment Amount: <span style="color: dodgerblue" id="perInstallmentAmount"></span></h5>
 
                         <hr>
@@ -78,9 +74,8 @@
     <script>
         $('input').keyup(function(){ // run anytime the value changes
             var amount  = Number($('#amount').val());   // get value of field
-            var installment = Number($('#installment').val()); // convert it to a float
 
-            $('#perInstallmentAmount').html(amount / installment); // add them and output it
+            $('#perInstallmentAmount').html(amount / 10); // add them and output it
         // add them and output it
         });
     </script>

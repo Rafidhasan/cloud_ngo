@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->mediumText('nid_image');
             $table->string('nominee_name')->nullable();
             $table->string('nominee_nid')->nullable();
+            $table->string('nominee_address')->nullable();
             $table->string('refer_account_number')->nullable();
             $table->boolean('approved')->default(0);
             $table->string('password');

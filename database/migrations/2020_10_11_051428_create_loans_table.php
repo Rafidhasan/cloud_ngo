@@ -79,7 +79,7 @@ class CreateLoansTable extends Migration
             $table->integer('perInstallmentAmount');
             $table->string('token');
             $table->timestamps();
-
+            $table->date('approved_date')->nulllable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');

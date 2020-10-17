@@ -65,6 +65,22 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
+                        <input type="text" name="nominee_name" placeholder="Enter Nominee name" required autofocus>
+                        @error('nominee_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <input type="text" name="nominee_address" placeholder="Enter Nominee Address" required autofocus>
+                        @error('nominee_address')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <label for="nominee_nid" class="text-white">Enter Nominee NID</label>
+                        <input type="file" name="nominee_nid" class="form-control-file" required>
+                        @error('nominee_nid')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
                         <input type="text" name="refer_account_number" placeholder="Reference Account number" autofocus>
                         @error('refer_account_number')
                             <span class="text-danger">{{ $message }}</span>

@@ -45,7 +45,7 @@
                 <div class="sidebar-sticky">
                   <ul class="nav flex-column">
                     <li class="nav-item">
-                      <a class="nav-link active" href="/admin">
+                      <a class="nav-link active" href="/dasboard">
                         <span data-feather="home"></span>
                         Dashboard <span class="sr-only">(current)</span>
                       </a>
@@ -75,7 +75,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/loans">
+                      <a class="nav-link" href="/loans/{{ Auth::user()->id }}">
                         <span data-feather="layers"></span>
                         Loans
                       </a>

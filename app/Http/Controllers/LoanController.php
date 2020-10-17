@@ -26,7 +26,6 @@ class LoanController extends Controller
     public function businessLoanCreate(Request $request) {
         $validatedData = $request->validate([
             'amount' => 'required',
-            'installment' => 'required',
             'name' => 'required',
             'address' => 'required',
             'category' => 'required',
@@ -52,11 +51,11 @@ class LoanController extends Controller
                 $loan->contact_business = $request->contact_no;
                 $loan->exp_business = $request->exp;
                 $loan->amount = $request->amount;
-                $loan->installments = $request->installment;
+                $loan->installments = 10;
                 $loan->capital = $request->capital;
                 $loan->fee = $fee;
                 $loan->token = Str::random(5);
-                $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                $loan->perInstallmentAmount = (int)$request->amount / 10;
                 $loan->save();
 
                 return redirect('/')->with('status', 'Wait for Admin to approve');
@@ -74,13 +73,13 @@ class LoanController extends Controller
                         $loan->contact_business = $request->contact_no;
                         $loan->exp_business = $request->exp;
                         $loan->amount = $request->amount;
-                        $loan->installments = $request->installment;
+                        $loan->installments = 10;
                         $loan->capital = $request->capital;
                         $loan->g_name = $g_name;
                         $loan->g_account_no = $g_account;
                         $loan->fee = $fee;
                         $loan->token = Str::random(5);
-                        $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                        $loan->perInstallmentAmount = (int)$request->amount / 10;
                         $loan->save();
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
                     }
@@ -105,7 +104,6 @@ class LoanController extends Controller
             'position' => 'required',
             'salary' => 'required',
             'amount' => 'required',
-            'installment' => 'required',
             'fee' => 'nullable',
             'g_name' => 'nullable',
             'g_account_no' => 'nullable',
@@ -124,10 +122,12 @@ class LoanController extends Controller
                 $loan->position = $request->position;
                 $loan->salary = $request->salary;
                 $loan->amount = $request->amount;
-                $loan->installments = $request->installment;
+                $loan->installments = 10;
                 $loan->fee = $fee;
+                $loan->g_name = $g_name;
+                $loan->g_account_no = $g_account;
                 $loan->token = Str::random(5);
-                $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                $loan->perInstallmentAmount = (int)$request->amount / 10;
                 $loan->save();
 
                 return redirect('/')->with('status', 'Wait for Admin to approve');
@@ -145,10 +145,12 @@ class LoanController extends Controller
                         $loan->position = $request->position;
                         $loan->salary = $request->salary;
                         $loan->amount = $request->amount;
-                        $loan->installments = $request->installment;
+                        $loan->installments = 10;
                         $loan->fee = $fee;
+                        $loan->g_name = $g_name;
+                        $loan->g_account_no = $g_account;
                         $loan->token = Str::random(5);
-                        $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                        $loan->perInstallmentAmount = (int)$request->amount / 10;
                         $loan->save();
 
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
@@ -172,7 +174,6 @@ class LoanController extends Controller
             'address' => 'required',
             'level' => 'required',
             'amount' => 'required',
-            'installment' => 'required',
             'fee' => 'nullable',
             'g_name' => 'nullable',
             'g_account_no' => 'nullable',
@@ -190,10 +191,10 @@ class LoanController extends Controller
                 $loan->edu_no = $request->contact_no;
                 $loan->level = $request->level;
                 $loan->amount = $request->amount;
-                $loan->installments = $request->installment;
+                $loan->installments = 10;
                 $loan->fee = $fee;
                 $loan->token = Str::random(5);
-                $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                $loan->perInstallmentAmount = (int)$request->amount / 10;
                 $loan->save();
 
                 return redirect('/')->with('status', 'Wait for Admin to approve');
@@ -210,10 +211,13 @@ class LoanController extends Controller
                         $loan->edu_no = $request->contact_no;
                         $loan->level = $request->level;
                         $loan->amount = $request->amount;
-                        $loan->installments = $request->installment;
+                        $loan->installments = 10;
                         $loan->fee = $fee;
+                        $loan->g_name = $g_name;
+                        $loan->g_account_no = $g_account;
                         $loan->token = Str::random(5);
-                        $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installment;
+                        $loan->perInstallmentAmount = (int)$request->amount / 10;
+                        $loan->save();
 
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
                     }

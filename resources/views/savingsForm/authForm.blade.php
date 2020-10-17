@@ -2,7 +2,7 @@
     @csrf
     <div class="form-group">
         <label class="text-white" for="sel1">Payment Method</label>
-        <select name="method" class="form-control">
+        <select id="method" name="method" class="form-control">
           <option value="bikash">Bikash</option>
           <option value="nogod">Nogod</option>
           <option value="rocket">Rocket</option>
@@ -21,6 +21,22 @@
     @error('password')
         <span class="text-danger">{{ $message }}</span>
     @enderror
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+    <p class="text-white" style="font-size: 24px" id="show"></p>
     <button class="site-btn">Apply for Savings</button>
 </form>
+<script>
+    const selectElement = document.getElementById("method");
+
+    selectElement.addEventListener('change', function (event)  {
+        if(event.target.value == 'bikash') {
+            document.getElementById("show").innerHTML = "Bkash account Number is 01772974123";
+        }   else if(event.target.value == 'nogod') {
+            document.getElementById("show").innerHTML = "Nogod account Number is 01772974123";
+        }   else if(event.target.value == 'rocket') {
+            document.getElementById("show").innerHTML = "Rocket Account Number is 017729741230";
+        }   else {
+            document.getElementById("show").innerHTML = "Select A Method";
+        }
+    });
+</script>
+</div>

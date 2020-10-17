@@ -16,7 +16,12 @@ use App\EmployeeLoan;
 use App\BusinessLoan;
 use App\EduLoan;
 
+use App\UserNotification;
+
 use App\Accounts;
+
+use App\ForgetPass;
+use App\Forgetuser;
 
 use Auth;
 
@@ -230,14 +235,24 @@ class AdminController extends Controller
     }
 
     public function approveEmployeeLoan(Request $request) {
-        $loan = EmployeeLoan::where('user_id', $request->id)
-            ->where('token', $request->token)
+        $loan = EmployeeLoan::where('token', $request->token)
             ->first();
 
-        $loan->approved = 1;
-        $loan->save();
+        if(isset($loan->g_account_no)) {
+            if($loan->g_approved == 1) {
+                $loan->approved = 1;
+                $loan->save();
 
-        return redirect('/admin/loans')->with('status', 'loan accepted');
+                return redirect('/admin/loans')->with('status', 'loan accepted');
+            }   else {
+                return redirect('/admin')->with('status', 'Wait for Garantor to accept first');
+            }
+        }   else {
+            $loan->approved = 1;
+            $loan->save();
+
+            return redirect('/admin/loans')->with('status', 'loan accepted');
+        }
     }
 
     public function rejectEmployeeLoan(Request $request) {
@@ -251,14 +266,24 @@ class AdminController extends Controller
     }
 
     public function approveEduLoan(Request $request) {
-        $loan = EduLoan::where('user_id', $request->id)
-            ->where('token', $request->token)
+        $loan = EduLoan::where('token', $request->token)
             ->first();
 
-        $loan->approved = 1;
-        $loan->save();
+        if(isset($loan->g_account_no)) {
+            if($loan->g_approved == 1) {
+                $loan->approved = 1;
+                $loan->save();
 
-        return redirect('/admin/loans')->with('status', 'loan accepted');
+                return redirect('/admin/loans')->with('status', 'loan accepted');
+            }   else {
+                return redirect('/admin')->with('status', 'Wait for Garantor to accept first');
+            }
+        }   else {
+            $loan->approved = 1;
+            $loan->save();
+
+            return redirect('/admin/loans')->with('status', 'loan accepted');
+        }
     }
 
     public function rejectEduLoan(Request $request) {
@@ -307,5 +332,37 @@ class AdminController extends Controller
         return view('admin.showGProfile', [
             'user' => $user
         ]);
+    }
+
+    // admin forget pass routes
+    public function forgetPass() {
+        $users = DB::table('users')
+            ->join('forget_users', 'users.id', '=', 'forget_users.user_id')
+            ->get();
+
+        return view('admin.forgetPass', [
+            'users' => $users
+        ]);
+    }
+
+    public function approvePass(Request $request) {
+        $user = ForgetUser::where('user_id', $request->id)->first();
+
+        $notification = new UserNotification();
+        $notification->user_id = $request->id;
+        $notification->status = "Your Password is ". $user->token;
+        $notification->save();
+
+        DB::table('forget_users')->where('user_id', '=', $request->id)->delete();
+
+        return redirect('/admin')->with('status', "Notification send");
+    }
+
+    public function rejectPass(Request $request) {
+        $user = ForgetUser::where('id', $request->id)->first();
+
+        DB::table('forget_users')->where('id', '=', $request->id)->delete();
+
+        return redirect('/admin')->with('status', "Not Approved. Notification send");
     }
 }

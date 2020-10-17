@@ -20,6 +20,11 @@ Route::get('/userInfo/{id}','AdminController@showSingleUser')->middleware('admin
 
 Route::get('/admin/accounts', 'AdminController@accounts')->middleware('admin');
 
+//admin forget pass section
+Route::get('/admin/forgetPass', 'AdminController@forgetPass')->middleware('admin');
+Route::get('/admin/approvePass/{id}', 'AdminController@approvePass')->middleware('admin');
+Route::get('/admin/rejectPass/{id}', 'AdminController@rejectPass')->middleware('admin');
+
 //user approve routes
 Route::get('/approve/{id}','AdminController@approveSingleUser')->middleware('admin');
 Route::get('/reject/{id}','AdminController@rejectSingleUser')->middleware('admin');
@@ -51,9 +56,7 @@ Route::get('admin/approvedLoans', 'AdminController@approvedLoans')->middleware('
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'UserRecordController@index');
 
 Auth::routes();
 
@@ -66,6 +69,9 @@ Route::get('/login', function() {
 Route::get('/logout', 'UserRecordController@logout');
 
 Route::post('/login','UserRecordController@login');
+Route::get('/forget', 'UserRecordController@forgetPassIndex');
+Route::post('/forget', 'UserRecordController@forgetPassStore');
+Route::get('/accptApprove/{id}', 'UserRecordController@removeNotification');
 
 //user profile routes
 Route::get('/profile/{id}','UserRecordController@show');
@@ -89,12 +95,20 @@ Route::post('/emp_loan/{id}', 'LoanController@employeeLoanCreate');
 Route::get('/edu_loan', 'LoanController@educationLoanIndex');
 Route::post('/edu_loan/{id}', 'LoanController@educationLoanCreate');
 
+// user dashboard show loan routes
+Route::get('/loans/{id}', 'userDashboard@showLoans');
+
 // Gaurantor loan routes
 Route::get('/g_loan/business/accept/{id}/{token}', 'userDashboard@g_acceptB');
 Route::get('/g_loan/emp/accept/{id}/{token}', 'userDashboard@g_acceptEm');
 Route::get('/g_loan/edu/accept/{id}/{token}', 'userDashboard@g_acceptEd');
 Route::get('/g_loan/reject/{id}', 'userDashboard@g_reject');
 
+// user fill Loan installment form routes
+Route::get('/loans/singleShowLoanEdu/{id}/{token}', 'LoanInstallmentController@eduLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanEmployee/{id}/{token}', 'LoanInstallmentController@employeeLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanBusiness/{id}/{token}', 'LoanInstallmentController@businessLoanInstallmentIndex');
 
+Route::post('/loan_installment/{id}/{token}', 'LoanInstallmentController@create');
 
-
+Route::post('/first_loan_installment/{id}/{token}/{month}/{net_amount}', "LoanInstallmentController@store");

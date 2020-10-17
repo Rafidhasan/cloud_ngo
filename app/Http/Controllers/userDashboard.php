@@ -111,4 +111,27 @@ class userDashboard extends Controller
             return redirect('/dashboard')->with('status', 'loan meaningless');
         }
     }
+
+    public function showLoans(Request $request) {
+        $edu_loans = EduLoan::where("user_id", $request->id)
+            ->where('approved', 1)
+            ->get()
+            ->toArray();
+
+        $employee_loans = EmployeeLoan::where('user_id', $request->id)
+            ->where('approved', 1)
+            ->get()
+            ->toArray();
+
+        $business_loans = BusinessLoan::where('user_id', $request->id)
+            ->where('approved', 1)
+            ->get()
+            ->toArray();
+
+        $users = array_merge($edu_loans, $employee_loans, $business_loans);
+
+        return view('user.dashboard.showLoans', [
+            'users' => $users
+        ]);
+    }
 }

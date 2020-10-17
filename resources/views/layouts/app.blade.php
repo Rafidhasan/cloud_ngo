@@ -62,6 +62,7 @@
                             </div>
                           </div>
                     </li>
+                    <li><a href="/admin" class="text-white">Admin</a></li>
                     <li><a class="text-white" href="/logout" role="submit">Logout</a></li>
                     <li><a class="text-white" href="/dashboard" class="text-white">Dashboard</a></li>
                 @endguest
