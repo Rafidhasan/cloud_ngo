@@ -114,6 +114,15 @@ class AdminController extends Controller
         return redirect('/admin/savings')->with('status', 'savings Updated');
     }
 
+    public function deleteSavings(Request $request) {
+        $user = SavingAcount::where('tracking_number', $request->track)
+        ->first();
+
+        $user->delete();
+
+        return redirect('/admin')->with('status', 'Saving Deleted');
+    }
+
     public function edituser(Request $request) {
         $user = User::where('id', $request->id)->first();
 

@@ -20,6 +20,7 @@
                     <th>Amount</th>
                     <th>Total</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@
                     <td>{{ $user->amount }}</td>
                     <td>{{ $user->total }}</td>
                     <td><a class="btn btn-primary btn-sm" href="/admin/savings/edit/{{ $user->tracking_number }}/{{ $user->user_id }}">Edit</a></td>
+                    <td><a class="btn btn-danger btn-sm" href="/admin/savings/delete/{{ $user->tracking_number }}">Delete</a></td>
                 </tr>
                  @endforeach
                 </tbody>
