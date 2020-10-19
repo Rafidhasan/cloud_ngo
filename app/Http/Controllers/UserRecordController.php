@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 
 use Auth;
 
-use App\SavingAcount;
-
 use App\ServiceCharge;
 
 use App\ForgetUser;

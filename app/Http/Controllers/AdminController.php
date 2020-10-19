@@ -40,7 +40,7 @@ class AdminController extends Controller
     }
 
     public function showUsers() {
-        $users = User::select('name', 'mobile_number', 'address', 'thana', 'NID_or_birth_certificate_number', 'nominee_name', 'nominee_nid')
+        $users = User::select('id', 'name', 'mobile_number', 'address', 'thana', 'NID_or_birth_certificate_number', 'nominee_name', 'nominee_nid')
             ->where('users.approved', 1)
             ->get();
 
@@ -51,7 +51,7 @@ class AdminController extends Controller
 
     public function savings() {
         $users = User::join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
-            ->select('name', 'users.mobile_number', 'address', 'thana', 'tracking_number', 'amount', 'total')
+            ->select('name', 'user_id', 'users.mobile_number', 'address', 'thana', 'tracking_number', 'amount', 'total')
             ->where('saving_acounts.approved', 1)
             ->orderByDesc('saving_acounts.created_at')
             ->get();
@@ -59,6 +59,85 @@ class AdminController extends Controller
             return view('admin.savings', [
             'users' => $users
         ]);
+    }
+
+    public function editSavingsIndex(Request $request) {
+        $user = User::join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
+            ->select('users.name', 'saving_acounts.*')
+            ->where('tracking_number', $request->tracking_number)
+            ->first();
+
+        return view('admin.savings_edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function updateSavings(Request $request) {
+        $id = $request->id;
+        $savings = SavingAcount::find($id);
+
+        $savings->mobile_number = $request->mobile_number;
+        $savings->method = $request->method;
+        $savings->tracking_number = $request->tracking_number;
+        $savings->amount = $request->amount;
+        $savings->user_id = $request->user_id;
+        $savings->approved = 1;
+
+        // $row = count(SavingAcount::select('amount')->where('user_id', $user->id)->get());
+
+        if($request->total == $request->amount) {
+            $savings->total = $request->amount;
+        }   else {
+            $user = SavingAcount::select('amount')->where('tracking_number', $request->track)->first();
+
+            $updated_amount = (int)$request->amount - $user->amount;
+
+            $users = SavingAcount::where('user_id', $request->user_id)->orderBy('created_at', 'asc')->get();
+
+            foreach($users as $key => $user) {
+                if($user->total == $request->total) {
+                    $index = $key;
+                }
+            }
+
+            $savings->total = $request->total + $updated_amount;
+
+            foreach($users as $key => $user) {
+                if ($key < $index) continue;
+                $user->total += $updated_amount;
+
+                $user->save();
+            }
+        }
+        $savings->save();
+
+        return redirect('/admin/savings')->with('status', 'savings Updated');
+    }
+
+    public function edituser(Request $request) {
+        $user = User::where('id', $request->id)->first();
+
+        return view('admin.showSingleEditUser', [
+            'user' => $user
+        ]);
+    }
+
+    public function updateUser(Request $request) {
+        $id = $request->id;
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->mobile_number = $request->mobile_number;
+        $user->fathers_name = $request->fathers_name;
+        $user->mothers_name = $request->mothers_name;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->address = $request->address;
+        $user->thana = $request->thana;
+        $user->nominee_name = $request->nominee_name;
+
+        $user->save();
+
+        return redirect('/admin')->with('status', 'User updating Successfull');
     }
 
     public function showSingleUser(Request $request) {

@@ -10,7 +10,7 @@
                 </div>
             </div>
 			<div class="row">
-                @include('userProfile.userinfo')
+                @include('userProfile.userInfo')
                 @include('userProfile.updateForm')
 			</div>
 		<div class="hero-slider owl-carousel">

@@ -107,6 +107,8 @@ class LoanInstallmentController extends Controller
             dd('3 month');
         }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth())) {
             //For three month
+
+
         }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth())) {
             //For Second Month
 

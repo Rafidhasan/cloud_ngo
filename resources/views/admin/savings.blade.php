@@ -18,7 +18,8 @@
                     <th>Thana</th>
                     <th>Tracking Number</th>
                     <th>Amount</th>
-                    <th>Total from previous</th>
+                    <th>Total</th>
+                    <th>Edit</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,7 @@
                     <td>{{ $user->tracking_number }}</td>
                     <td>{{ $user->amount }}</td>
                     <td>{{ $user->total }}</td>
+                    <td><a class="btn btn-primary btn-sm" href="/admin/savings/edit/{{ $user->tracking_number }}/{{ $user->user_id }}">Edit</a></td>
                 </tr>
                  @endforeach
                 </tbody>

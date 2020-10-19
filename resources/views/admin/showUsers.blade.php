@@ -16,9 +16,11 @@
                     <th>Mobile Number</th>
                     <th>Address</th>
                     <th>Thana</th>
-                    <th>Tracking Number</th>
-                    <th>Amount</th>
-                    <th>Total from previous</th>
+                    <th>NID Number</th>
+                    <th>Nominee Name</th>
+                    <th>Nominee NID</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -29,9 +31,11 @@
                     <td>{{ $user->mobile_number }}</td>
                     <td>{{ $user->address }}</td>
                     <td>{{ $user->thana }}</td>
-                    <td>{{ $user->tracking_number }}</td>
-                    <td>{{ $user->amount }}</td>
-                    <td>{{ $user->total }}</td>
+                    <td>{{ $user->NID_or_birth_certificate_number }}</td>
+                    <td>{{ $user->nominee_name }}</td>
+                    <td>{{ $user->nominee_nid }}</td>
+                    <td><a href="/admin/showUser/{{ $user->id }}" class="btn btn-primary btn-sm">Edit</a></td>
+                    <td><a href="/admin/deleteUser/{{ $user->id }}" class="btn btn-danger btn-sm">Delete</a></td>
                 </tr>
                  @endforeach
                 </tbody>

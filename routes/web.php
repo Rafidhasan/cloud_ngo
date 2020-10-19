@@ -30,12 +30,17 @@ Route::get('/approve/{id}','AdminController@approveSingleUser')->middleware('adm
 Route::get('/reject/{id}','AdminController@rejectSingleUser')->middleware('admin');
 Route::get('/deleteSingleUser/{id}', 'AdminController@deleteSingleUser')->middleware('admin');
 
+//admin user record controller routes
+Route::get('/admin/showUser/{id}', 'AdminController@editUser')->middleware('admin');
+Route::put('/admin/userUpdate/{id}', 'AdminController@updateUser')->middleware('admin');
 
 // admin savings form routes
 Route::get('/admin/approve/savings/{id}', 'AdminController@accptSavings')->middleware('admin');
 Route::get('/admin/reject/savings/{id}', 'AdminController@rejectSavings')->middleware('admin');
 Route::get('/admin/approveSavings', 'AdminController@approveSavings')->middleware('admin');
 Route::get('/admin/savings', 'AdminController@savings')->middleware('admin');
+Route::get('/admin/savings/edit/{tracking_number}/{id}', 'AdminController@editSavingsIndex')->middleware('admin');
+Route::put('/admin/savings/update/{user_id}/{total}/{id}/{track}', 'AdminController@updateSavings');
 
 //admin loan routes
 Route::get('/admin/loans','AdminController@showLoans')->middleware('admin');
