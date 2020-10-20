@@ -41,7 +41,7 @@ Route::get('/admin/approveSavings', 'AdminController@approveSavings')->middlewar
 Route::get('/admin/savings', 'AdminController@savings')->middleware('admin');
 Route::get('/admin/savings/edit/{tracking_number}/{id}', 'AdminController@editSavingsIndex')->middleware('admin');
 Route::put('/admin/savings/update/{user_id}/{total}/{id}/{track}', 'AdminController@updateSavings')->middleware('admin');
-Route::get('/admin/saving/delete/{track}', 'AdminController@deleteSavings')->middleware('admin');
+Route::get('/admin/savings/delete/{track}', 'AdminController@deleteSavings')->middleware('admin');
 
 //admin loan routes
 Route::get('/admin/loans','AdminController@showLoans')->middleware('admin');

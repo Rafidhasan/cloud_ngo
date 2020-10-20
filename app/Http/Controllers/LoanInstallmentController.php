@@ -93,19 +93,19 @@ class LoanInstallmentController extends Controller
 
         if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(9)->lte(Carbon::now()->startOfMonth())) {
             dd('9 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth())) {
             dd('8 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth())) {
             dd('7 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth())) {
             dd('6 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth())) {
             dd('5 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth())) {
             dd('4 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth())) {
             dd('3 month');
-        }   elseif(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth())) {
+        }   else if(Carbon::create($user[0]['created_at'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth())) {
             //For three month
 
 
