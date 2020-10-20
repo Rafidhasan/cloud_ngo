@@ -166,15 +166,15 @@ class UserRecordController extends Controller
 
         $credentials = $request->only('mobile_number', 'password');
 
-        if($user->approved == 1) {
-            if (Auth::attempt($credentials)) {
-                // Authentication passed...
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            if($user->approved == 1) {
                 return redirect('/');
-            }else{
-                return redirect('/login')->with('status', 'Incorrect Password');
+            }   else {
+                return redirect('/login')->with('status', 'wait for authority to approve');
             }
-        }   else {
-            return redirect('/login')->with('status', 'wait for authority to approve');
+        }else{
+            return redirect('/login')->with('status', 'Incorrect Password');
         }
     }
 
