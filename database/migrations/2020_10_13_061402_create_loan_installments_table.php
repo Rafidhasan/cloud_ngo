@@ -15,7 +15,7 @@ class CreateLoanInstallmentsTable extends Migration
     {
         Schema::create('loan_installments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('loan_id');
             $table->string('token');
             $table->string('mobile_number');
             $table->string('tracking_number');
@@ -25,8 +25,6 @@ class CreateLoanInstallmentsTable extends Migration
             $table->dateTime('next_month');
             $table->boolean('approved')->default(0);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

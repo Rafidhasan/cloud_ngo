@@ -29,6 +29,7 @@ class CreateLoansTable extends Migration
             $table->string('g_name')->nullable();
             $table->string('g_account_no')->nullable();
             $table->boolean('approved')->default(0);
+            $table->dateTime('approved_date')->nullable();
             $table->boolean('g_approved')->default(0);
             $table->string('token');
             $table->timestamps();
@@ -50,6 +51,7 @@ class CreateLoansTable extends Migration
             $table->string('g_name')->nullable();
             $table->string('g_account_no')->nullable();
             $table->boolean('approved')->default(0);
+            $table->dateTime('approved_date')->nullable();
             $table->boolean('g_approved')->default(0);
             $table->integer('amount');
             $table->integer('installments');

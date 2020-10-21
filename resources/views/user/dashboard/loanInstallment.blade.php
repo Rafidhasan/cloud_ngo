@@ -14,10 +14,10 @@
                 <li><h5>Loan date: {{ $starting_date }}</h5></li>
                 <li><h5>Loan last date: {{ $ending }}</h5></li>
                 <li><h5 style="color: red">You have to clear your loan before 1st day of the month</h5></li>
-                <li><h5><a href="">Check Previous Loan payment</a></li></h5>
+                <li><h5><a href="/prev_loan_details/{{ $user[0]['id'] }}">Check Previous Loan payment</a></li></h5>
                 <li><h5>Paying for {{ $next_month }}. Last date - {{ $next_month_date }}</h5></li>
             </ul>
-            <form method="post" action="/first_loan_installment/{{ $user[0]['user_id'] }}/{{ $user[0]['token'] }}/{{ $next_month_date }}/{{ $user[0]["amount"] }}">
+            <form method="post" action="/first_loan_installment/{{ $user[0]['id'] }}/{{ $user[0]['token'] }}/{{ $next_month_date }}/{{ $user[0]["amount"] }}">
                 @csrf
                 <div class="form-group">
                     <label class="text-white">Payment Method</label>
