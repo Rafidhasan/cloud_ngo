@@ -19,8 +19,6 @@
                     <th>Installments</th>
                     <th>Per Installment Amount</th>
                     <th>Fee</th>
-                    <th>Garantor Name</th>
-                    <th>Garantor Account No</th>
                     <th>Details</th>
                     <th>Edit</th>
                   </tr>
@@ -44,20 +42,6 @@
                     <td>{{ $user->installments }}</td>
                     <td>{{ $user->perInstallmentAmount }}</td>
                     <td>{{ $user->fee }}</td>
-                    <td>
-                        @if (isset($user->g_name))
-                            <a href="/admin/showGProfile/{{ $user->g_account_no }}">{{ $user->g_name }}</a>
-                        @else
-                            None
-                        @endif
-                    </td>
-                    <td>
-                        @if (isset($user->g_account_no))
-                            {{ $user->g_account_no }}
-                        @else
-                            None
-                        @endif
-                    </td>
                     <td>
                         @if (isset($user->business_name))
                             <a href="/admin/singleShowLoanBusiness/{{ $user->user_id }}/{{ $user->token }}">Details</a>

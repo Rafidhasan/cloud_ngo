@@ -102,11 +102,18 @@ class UserRecordController extends Controller
                     return $request;
                     $user->nominee_nid = ' ';
                 }
-
                 $user->save();
+
+                $notification = new UserNotification();
+                $notification->user_id = $user->id;
+                $notification->status = 'Thanks for Registration. your password is '.$token;
+
+                $notification->save();
+
                 return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
              }  else {
                 $user = new User();
+
                 $date = $request->date_of_birth;
                 $token = Str::random(5);
 
@@ -144,8 +151,14 @@ class UserRecordController extends Controller
                     $user->nid_image = ' ';
                 }
 
-                $user->save();
-                return redirect('/')->with('status', 'Thanks for Registration. your password is '.$token.'Wait for admin approval');
+                $notification = new UserNotification();
+                $notification->user_id = $request->id;
+                $notification->status = 'Wait for Authity to validate. Your password is '.$token;
+                dd($user->id);
+
+                $notification->save();
+
+                return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
              }
          }  else if($user->mobile_number == $request->mobile_number) {
 

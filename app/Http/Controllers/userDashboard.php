@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 
 use App\Notifications\ServiceCharge;
 
+use App\Garantor;
+
 use App\EduLoan;
 use App\BusinessLoan;
 use App\EmployeeLoan;
@@ -29,25 +31,28 @@ class userDashboard extends Controller
     public function approvedLoans() {
         $edu_loans = DB::table('users')
             ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
+            ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
             ->where('edu_loans.approved', '=', 0)
-            ->where('edu_loans.g_approved', '=', 0)
-            ->where('edu_loans.g_account_no', '=', Auth::user()->mobile_number)
+            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->where('garantors.loan_method', 'edu_loan')
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('users')
             ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
+            ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
             ->where('employee_loans.approved', '=', 0)
-            ->where('employee_loans.g_approved', '=', 0)
-            ->where('employee_loans.g_account_no', '=', Auth::user()->mobile_number)
+            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->where('garantors.loan_method', 'employee_loan')
             ->get()
             ->toArray();
 
         $business_loans = DB::table('users')
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
+            ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
             ->where('business_loans.approved', '=', 0)
-            ->where('business_loans.g_approved', '=', 0)
-            ->where('business_loans.g_account_no', '=', Auth::user()->mobile_number)
+            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->where('garantors.loan_method', 'business_loan')
             ->get()
             ->toArray();
 
@@ -59,20 +64,17 @@ class userDashboard extends Controller
     }
 
     public function g_acceptB(Request $request) {
-        $loan = BusinessLoan::where('token', $request->token)
-            ->first();
+        $garantors = Garantor::where('loan_method', 'business_loan')->where('g_mobile_number', Auth::user()->mobile_number)->get();
 
-        if(isset($loan->g_account_no)) {
-            if($loan->g_approved == 0) {
-                $loan->g_approved = 1;
-                $loan->save();
+        foreach ($garantors as $key => $garantor) {
+            if($garantor->g_approved == 0) {
+                $garantor->g_approved = 1;
+                $garantor->save();
 
                 return redirect('/dashboard')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Already Approved');
             }
-        }   else {
-            return redirect('/dashboard')->with('status', 'loan meaningless');
         }
     }
 

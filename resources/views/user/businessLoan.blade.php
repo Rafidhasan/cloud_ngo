@@ -48,19 +48,61 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
+                        <label class="text-white" for="installments">Installments Maximum month : 10</label>
+                        <input id="installments" type="text" name="installments" placeholder="Loan installments"  required autofocus>
+                        @error('installments')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
                         <h5 class="text-white">Per Installment Amount: <span style="color: dodgerblue" id="perInstallmentAmount"></span></h5>
 
                         <hr>
-                        <h3 class="text-white mb-3">Optional (only if you have any Gaurantor)</h3>
-                        <input type="text" name="g_name" placeholder="Gaurantor Name" autofocus>
-                        @error('g_name')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <input type="text" name="g_account_no" placeholder="Gaurantor Account Number" autofocus>
-                        @error('g_account_no')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-						<button type="submit" class="site-btn">Register</button>
+                        <h3 class="text-white mb-3">Minimum one Gaurantor is required for any kind of loan</h3>
+
+                        <span class="addRowCol">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <input type="text" name="g_name[]" placeholder="Gaurantor name" required autofocus>
+                                    @error('g_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" required autofocus>
+                                    @error('g_account_no')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-1">
+                                    <a class="btn btn-info addRow text-white font-weight-bold">Add</a>
+                                </div>
+                            </div>
+                        </span>
+                        <script type="text/javascript">
+                            $('.addRow').on('click', function() {
+                                addRow();
+                            });
+                            $('span').on('click', '.removeRow', function() {
+                                $(this).parent().parent().remove();
+                            });
+                            function addRow() {
+                                var tr = '<div class="row">'+
+                                            '<div class="col-md-11">'+
+                                            '<input type="text" name="g_name[]" placeholder="Gaurantor Name" class="mt-3" class="form-control">'+
+                                            ' @error('g_name')'+
+                                            '<span class="text-danger">{{ $message }}</span>'+
+                                            '@enderror'+
+                                            '<input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" required autofocus>'+
+                                            '@error('g_account_no')'+
+                                            '<span class="text-danger">{{ $message }}</span>'+
+                                            '@enderror'+
+                                            '</div>'+
+                                            '<div class="col-md-1">'+
+                                            '<a class="btn btn-danger removeRow text-white font-weight-bold">Remove</a>'+
+                                            '</div>'+
+                                        '</div>';
+                                $('.addRowCol').append(tr);
+                            }
+                        </script>
+                        <button type="submit" class="site-btn">Apply</button>
 					</form>
 				</div>
 			</div>
@@ -73,12 +115,15 @@
     </section>
     <script>
         $('input').keyup(function(){ // run anytime the value changes
-            var amount  = Number($('#amount').val());   // get value of field
+            var amount  = Number($('#amount').val());
+            var installments  = Number($('#installments').val());   // get value of field
 
-            $('#perInstallmentAmount').html(amount / 10); // add them and output it
+            $('#perInstallmentAmount').html(amount / installments); // add them and output it
         // add them and output it
         });
     </script>
+
+
 	<!-- Hero Section end -->
 @endsection
 

@@ -161,8 +161,28 @@ class AdminController extends Controller
         $user = User::where('id', $request->id)
             ->first();
 
+        $notification = UserNotification::where('user_id', $request->id)->first();
+
         $user->approved = 1;
         $user->update();
+
+        $username = "Alauddin101";
+        $hash = "4f9ec55ab0531a44a466910119d97847";
+        $numbers = $user->mobile_number;
+        $message = $notification->status;
+
+
+        $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $response = curl_exec($ch);
+        curl_close ($ch);
+
         return redirect('/admin')->with('member approved');
     }
 
@@ -191,6 +211,23 @@ class AdminController extends Controller
         $saving->approved = 1;
         $saving->save();
 
+        $username = "Alauddin101";
+        $hash = "4f9ec55ab0531a44a466910119d97847";
+        $numbers = $user_info->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+        $message = 'Thanks! Your Saving amount is '.$saving->amount.' and your current saving is '.$saving->total;
+
+
+        $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $response = curl_exec($ch);
+        curl_close ($ch);
+
         return redirect('/admin/approveSavings')->with('status', 'Saving Approved');
     }
 
@@ -198,6 +235,23 @@ class AdminController extends Controller
         $saving = SavingAcount::where('tracking_number', $request->id)->first();
 
         $saving->delete();
+
+        $username = "Alauddin101";
+        $hash = "4f9ec55ab0531a44a466910119d97847";
+        $numbers = $user_info->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+        $message = 'Your amount '.$saving->amount. ' is not received';
+
+
+        $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $response = curl_exec($ch);
+        curl_close ($ch);
 
         return redirect('/admin/approveSavings')->with('status', 'Saving Deleted');
     }
@@ -227,21 +281,18 @@ class AdminController extends Controller
         $edu_loans = DB::table('users')
             ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
             ->where('edu_loans.approved', '=', 0)
-            ->select('users.name', 'token', 'g_name', 'g_account_no', 'users.mobile_number', 'user_id', 'edu_no', 'amount', 'installments', 'perInstallmentAmount', 'fee')
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('users')
             ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
             ->where('employee_loans.approved', '=', 0)
-            ->select('users.name', 'org_name', 'g_name', 'g_account_no', 'users.mobile_number','user_id','token',  'office_no', 'amount', 'installments', 'perInstallmentAmount', 'fee')
             ->get()
             ->toArray();
 
         $business_loans = DB::table('users')
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
             ->where('business_loans.approved', '=', 0)
-            ->select('users.name', 'users.mobile_number', 'g_name', 'g_account_no', 'user_id','token', 'business_name', 'amount', 'installments', 'perInstallmentAmount', 'fee')
             ->get()
             ->toArray();
 
@@ -255,13 +306,17 @@ class AdminController extends Controller
     public function showSingleMemberLoansBusiness(Request $request) {
         $user = DB::table('users')
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
+            ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
             ->where('business_loans.token', '=', $request->token)
             ->where('business_loans.approved', '=', 0)
             ->where('business_loans.user_id', '=', $request->id)
             ->first();
 
+        $garantors = DB::table('garantors')->where('loan_id', $user->loan_id)->get();
+
         return view('admin.loans.showSingleApprovalBusinessLoan', [
-            'user' => $user
+            'user' => $user,
+            'garantors' => $garantors
         ]);
     }
 
@@ -363,17 +418,31 @@ class AdminController extends Controller
         if(isset($loan->g_account_no)) {
             if($loan->g_approved == 1) {
                 $loan->approved = 1;
-                $loan->save();
+            $loan->save();
+
+                $username = "Alauddin101";
+                $hash = "4f9ec55ab0531a44a466910119d97847";
+                $numbers = $user_info->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+                $message = 'Your loan has been approved by NGO and garantor. Loan amount : '. $loan->amount;
+
+
+                $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+                $response = curl_exec($ch);
+                curl_close ($ch);
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Wait for Garantor to accept first');
             }
         }   else {
-            $loan->approved = 1;
-            $loan->save();
-
-            return redirect('/admin/loans')->with('status', 'loan accepted');
+            dd('minimum 1ta garantor thakte hbe');
         }
     }
 
@@ -439,14 +508,33 @@ class AdminController extends Controller
     public function approvePass(Request $request) {
         $user = ForgetUser::where('user_id', $request->id)->first();
 
+        $user_info = User::select('mobile_number')->where('id', $request->id)->first();
+
         $notification = new UserNotification();
         $notification->user_id = $request->id;
         $notification->status = "Your Password is ". $user->token;
         $notification->save();
 
+        $username = "Alauddin101";
+        $hash = "4f9ec55ab0531a44a466910119d97847";
+        $numbers = $user_info->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+        $message = $notification->status;
+
+
+        $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+        $response = curl_exec($ch);
+        curl_close ($ch);
+
         DB::table('forget_users')->where('user_id', '=', $request->id)->delete();
 
-        return redirect('/admin')->with('status', "Notification send");
+        return redirect('/admin')->with('status', "Notification send to this number ".$user_info->mobile_number);
     }
 
     public function rejectPass(Request $request) {

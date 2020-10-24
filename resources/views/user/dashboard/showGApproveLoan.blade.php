@@ -46,14 +46,14 @@
                     <td>{{ $user->fee }}</td>
                     <td>
                         @if (isset($user->g_name))
-                            <a href="/admin/showGProfile/{{ $user->g_account_no }}">{{ $user->g_name }}</a>
+                            <a href="/admin/showGProfile/{{ $user->g_mobile_number }}">{{ $user->g_name }}</a>
                         @else
                             None
                         @endif
                     </td>
                     <td>
-                        @if (isset($user->g_account_no))
-                            {{ $user->g_account_no }}
+                        @if (isset($user->g_mobile_number))
+                            {{ $user->g_mobile_number }}
                         @else
                             None
                         @endif

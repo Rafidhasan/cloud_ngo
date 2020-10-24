@@ -69,7 +69,25 @@ class ServiceCharge extends Command
                 $accounts->user_id = $user_id;
                 $accounts->total_service_charge = $total;
 
+                $username = "Alauddin101";
+                $hash = "4f9ec55ab0531a44a466910119d97847";
+                $numbers = $user->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+                $message = '20tk has been deducted for your service charge. Thank you! Your current saving is '.$saving->total;
+
+                $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+                $response = curl_exec($ch);
+                curl_close ($ch);
+
                 $accounts->save();
+
+
             }
 
         }
