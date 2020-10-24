@@ -25,6 +25,7 @@ class CreateLoansTable extends Migration
             $table->string('contact_business');
             $table->string('exp_business');
             $table->string('capital');
+            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
             $table->boolean('g_approved')->default(0);
@@ -44,6 +45,7 @@ class CreateLoansTable extends Migration
             $table->string('office_no');
             $table->string('position');
             $table->integer('salary');
+            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
             $table->dateTime('approved_date')->nullable();
@@ -65,6 +67,7 @@ class CreateLoansTable extends Migration
             $table->string('org_address');
             $table->string('level');
             $table->string('edu_no');
+            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
             $table->integer('amount');
