@@ -362,7 +362,7 @@ class AdminController extends Controller
             }
         }   else {
             $loan->approved = 1;
-            $loan->approved_date = now();
+            // $loan->approved_date = now();
 
             $loan->save();
 
