@@ -31,7 +31,7 @@ Route::get('/reject/{id}','AdminController@rejectSingleUser')->middleware('admin
 Route::get('/deleteSingleUser/{id}', 'AdminController@deleteSingleUser')->middleware('admin');
 
 //admin user record controller routes
-Route::get('/admin/showUser/{id}', 'AdminController@editUser')->middleware('admin');
+Route::get('/adm/approveLoansin/showUser/{id}', 'AdminController@editUser')->middleware('admin');
 Route::put('/admin/userUpdate/{id}', 'AdminController@updateUser')->middleware('admin');
 
 // admin savings form routes
@@ -56,8 +56,13 @@ Route::get('/admin/rejectEduLoan/loan/{id}/{token}','AdminController@rejectEduLo
 
 Route::get('/admin/showGProfile/{number}', 'AdminController@showGProfile')->middleware('admin');
 
+//admin loan installments routes
+Route::get('/admin/loanInstallments', 'LoanInstallmentController@show')->middleware('admin');
+Route::get('/admin/loanInstallmentsDetails/{user_id}/{token}', 'LoanInstallmentController@showSingleLoanDetails')->middleware('admin');
+Route::get('/admin/loanInstallment/apporve/{tracking_number}/{token}', 'LoanInstallmentController@acceptSingleLoanInstallment')->middleware('admin');
+
 //admin Approved Loans routes
-Route::get('admin/approvedLoans', 'AdminController@approvedLoans')->middleware('admin');
+Route::get('/admin/approvedLoans', 'AdminController@approvedLoans')->middleware('admin');
 
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');

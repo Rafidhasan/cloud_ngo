@@ -25,9 +25,11 @@ class CreateLoansTable extends Migration
             $table->string('contact_business');
             $table->string('exp_business');
             $table->string('capital');
-            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
+            $table->boolean('completed')->default(0);
+            $table->boolean('paid')->default(0);
+            $table->dateTime('approved_date')->nullable();
             $table->boolean('g_approved')->default(0);
             $table->string('token');
             $table->timestamps();
@@ -45,10 +47,11 @@ class CreateLoansTable extends Migration
             $table->string('office_no');
             $table->string('position');
             $table->integer('salary');
-            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
             $table->dateTime('approved_date')->nullable();
+            $table->boolean('completed')->default(0);
+            $table->boolean('paid')->default(0);
             $table->integer('amount');
             $table->integer('installments');
             $table->integer('perInstallmentAmount');
@@ -67,7 +70,6 @@ class CreateLoansTable extends Migration
             $table->string('org_address');
             $table->string('level');
             $table->string('edu_no');
-            $table->date('approved_date');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
             $table->integer('amount');
@@ -76,6 +78,8 @@ class CreateLoansTable extends Migration
             $table->string('token');
             $table->timestamps();
             $table->date('approved_date')->nulllable();
+            $table->boolean('completed')->default(0);
+            $table->boolean('paid')->default(0);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');

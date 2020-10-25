@@ -87,6 +87,12 @@
                         </a>
                       </li>
                       <li class="nav-item">
+                        <a class="nav-link" href="/admin/loanInstallments">
+                          <span data-feather="layers"></span>
+                          Loan Installments
+                        </a>
+                      </li>
+                      <li class="nav-item">
                         <a class="nav-link" href="/admin/forgetPass">
                           <span data-feather="layers"></span>
                           Forget Pass

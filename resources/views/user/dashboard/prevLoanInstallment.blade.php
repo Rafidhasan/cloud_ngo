@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('user.dashboard.layouts.app')
 
 @section('content')
     <!-- Hero Section end -->
@@ -6,7 +6,7 @@
 
             {{-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> --}}
 
-            <h2>Loans for Approval</h2><br><br>
+            <h2>Loan Installments History</h2><br><br>
             <div class="table-responsive">
               <table class="table table-striped table-sm">
                 <thead>
@@ -16,7 +16,7 @@
                     <th>Tracking Number</th>
                     <th>Amount</th>
                     <th>Net Amount</th>
-                    <th>Paying for</th>
+                    <th>Paid for</th>
                     <th>Next Session</th>
                   </tr>
                 </thead>

@@ -116,17 +116,17 @@ class userDashboard extends Controller
 
     public function showLoans(Request $request) {
         $edu_loans = EduLoan::where("user_id", $request->id)
-            ->where('approved', 1)
+            ->where('edu_loans.completed', 0)
             ->get()
             ->toArray();
 
         $employee_loans = EmployeeLoan::where('user_id', $request->id)
-            ->where('approved', 1)
+            ->where('employee_loans.completed', 0)
             ->get()
             ->toArray();
 
         $business_loans = BusinessLoan::where('user_id', $request->id)
-            ->where('approved', 1)
+            ->where('business_loans.completed', 0)
             ->get()
             ->toArray();
 

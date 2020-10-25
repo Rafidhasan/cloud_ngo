@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('user.dashboard.layouts.app')
 
 @section('content')
     <!-- Hero Section end -->
@@ -17,10 +17,8 @@
                     <th>Installments</th>
                     <th>Per Installment Amount</th>
                     <th>Fee</th>
-                    <th>Garantor Name</th>
-                    <th>Garantor Account No</th>
                     <th>Details</th>
-                    <th>Edit</th>
+                    {{-- <th>Edit</th> --}}
                   </tr>
                 </thead>
                 <tbody>
@@ -41,29 +39,27 @@
                     <td>{{ $user['perInstallmentAmount'] }}</td>
                     <td>{{ $user['fee'] }}</td>
                     <td>
-                        @if (isset($user['g_name']))
-                            {{ $user['g_name'] }}
-                        @else
-                            None
-                        @endif
-                    </td>
-                    <td>
-                        @if (isset($user['g_account_no']))
-                            {{ $user['g_account_no'] }}
-                        @else
-                            None
-                        @endif
-                    </td>
-                    <td>
                         @if (isset($user['business_name']))
-                            <a href="singleShowLoanBusiness/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                            @if ($user['paid'] == 1)
+                                Wait for Admin to Approve. Your loan is  completed
+                            @else
+                                <a href="singleShowLoanBusiness/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                            @endif
                         @elseif (isset($user->office_no))
-                            <a href="singleShowLoanEmployee/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                        @if ($user['paid'] == 1)
+                                Wait for Admin to Approve. Your loan is  completed
+                            @else
+                                <a href="singleShowLoanEmployee/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                            @endif
                         @else
-                            <a href="singleShowLoanEdu/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                            @if ($user['paid'] == 1)
+                                Wait for Admin to Approve. Your loan is  completed
+                            @else
+                                <a href="singleShowLoanEdu/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
+                            @endif
                         @endif
                     </td>
-                    <td><a href="singleShowLoanEdit/{{ $user['user_id'] }}/{{ $user['token'] }}">Edit</a></td>
+                    {{-- <td><a href="singleShowLoanEdit/{{ $user['user_id'] }}/{{ $user['token'] }}">Edit</a></td> --}}
                 </tr>
                  @endforeach
                 </tbody>

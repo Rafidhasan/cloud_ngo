@@ -53,7 +53,7 @@ class LoanController extends Controller
         if($user->savingAmount() > $fee) {
             foreach ($users as $user) {
                 foreach($garantor_numbers as $garantor_number) {
-                    if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number) {
+                    if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $user->installments < 11) {
                         $g_account = $user->mobile_number;
                         $g_name = $user->name;
                         $loan->user_id = $request->id;

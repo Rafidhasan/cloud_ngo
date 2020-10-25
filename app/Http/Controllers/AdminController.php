@@ -207,6 +207,10 @@ class AdminController extends Controller
     }
 
     public function accptSavings(Request $request) {
+        $user_info = DB::table('users')
+            ->join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
+            ->first();
+
         $saving = SavingAcount::where('tracking_number', $request->id)->first();
         $saving->approved = 1;
         $saving->save();
@@ -233,6 +237,11 @@ class AdminController extends Controller
 
     public function rejectSavings(Request $request) {
         $saving = SavingAcount::where('tracking_number', $request->id)->first();
+
+        $user_info = DB::table('users')
+            ->join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
+            ->first();
+
 
         $saving->delete();
 
@@ -356,6 +365,8 @@ class AdminController extends Controller
                 $loan->approved_date = now();
                 $loan->save();
 
+
+
                 return redirect('/admin/loans')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Wait for Garantor to accept first');
@@ -363,8 +374,13 @@ class AdminController extends Controller
         }   else {
             $loan->approved = 1;
             $loan->approved_date = now();
+            $savings = SavingAcount::where('user_id', $loan->user_id)->latest()->first();
+
+            $savings->total = (int)$savings->total - (int)$loan->fee;
 
             $loan->save();
+
+            $savings->save();
 
             return redirect('/admin/loans')->with('status', 'loan accepted');
         }
