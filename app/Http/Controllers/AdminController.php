@@ -496,7 +496,6 @@ class AdminController extends Controller
             ->toArray();
 
         $users = array_merge($edu_loans, $employee_loans, $business_loans);
-
         return view('admin.showApprovedLoans', [
             'users' => $users
         ]);

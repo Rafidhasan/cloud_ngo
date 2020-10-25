@@ -110,7 +110,7 @@ Route::post('/edu_loan/{id}', 'LoanController@educationLoanCreate');
 Route::get('/loans/{id}', 'userDashboard@showLoans');
 
 // Gaurantor loan routes
-Route::get('/g_loan/business/accept/{id}/{token}', 'userDashboard@g_acceptB');
+Route::get('/g_loan/business/accept/{id}/{token}/{loan_id}', 'userDashboard@g_acceptB');
 Route::get('/g_loan/emp/accept/{id}/{token}', 'userDashboard@g_acceptEm');
 Route::get('/g_loan/edu/accept/{id}/{token}', 'userDashboard@g_acceptEd');
 Route::get('/g_loan/reject/{id}', 'userDashboard@g_reject');
