@@ -153,42 +153,6 @@ class LoanController extends Controller
         }   else {
             return redirect('/')->with('status', 'You must have savings for loan');
         }
-
-        if($user->savingAmount() > $fee) {
-            if($request->g_account_no == '') {
-
-
-                return redirect('/')->with('status', 'Wait for Admin to approve');
-            }   else {
-                $users = User::get();
-
-                foreach ($users as $user) {
-                    if($user->mobile_number == $request->g_account_no && Auth::user()->mobile_number != $request->g_account_no) {
-                        $g_account = $user->mobile_number;
-                        $g_name = $user->name;
-                        $loan->user_id = $request->id;
-                        $loan->org_name = $request->name;
-                        $loan->exp = $request->exp;
-                        $loan->office_no = $request->contact_no;
-                        $loan->position = $request->position;
-                        $loan->salary = $request->salary;
-                        $loan->amount = $request->amount;
-                        $loan->installments = 10;
-                        $loan->fee = $fee;
-                        $loan->g_name = $g_name;
-                        $loan->g_account_no = $g_account;
-                        $loan->token = Str::random(5);
-                        $loan->perInstallmentAmount = (int)$request->amount / 10;
-                        $loan->save();
-
-                        return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
-                    }
-                }
-                return redirect('/')->with('status', 'Wrong Gaurantor Info');
-            }
-        }   else {
-            return redirect('/')->with('status', 'You must have savings for loan');
-        }
     }
 
     public function educationLoanIndex() {
@@ -207,51 +171,45 @@ class LoanController extends Controller
             'g_account_no' => 'nullable',
         ]);
 
+        $garantor_numbers = $request->g_account_no;
+
         $loan = new EduLoan();
+
         $user = Auth::user();
         $fee = $request->amount * 2/100;
+        $users = User::get();
 
         if($user->savingAmount() > $fee) {
-            if($request->g_account_no == '') {
-                $loan->user_id = $request->id;
-                $loan->org_name = $request->name;
-                $loan->org_address = $request->address;
-                $loan->edu_no = $request->contact_no;
-                $loan->level = $request->level;
-                $loan->amount = $request->amount;
-                $loan->installments = 10;
-                $loan->fee = $fee;
-                $loan->token = Str::random(5);
-                $loan->perInstallmentAmount = (int)$request->amount / 10;
-                $loan->save();
-
-                return redirect('/')->with('status', 'Wait for Admin to approve');
-            }   else {
-                $users = User::get();
-
-                foreach ($users as $user) {
-                    if($user->mobile_number == $request->g_account_no && Auth::user()->mobile_number != $request->g_account_no) {
-                        $g_account = $user->mobile_number;
-                        $g_name = $user->name;
+            foreach ($users as $user) {
+                foreach($garantor_numbers as $garantor_number) {
+                    if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $user->installments < 11) {
                         $loan->user_id = $request->id;
                         $loan->org_name = $request->name;
                         $loan->org_address = $request->address;
                         $loan->edu_no = $request->contact_no;
                         $loan->level = $request->level;
                         $loan->amount = $request->amount;
-                        $loan->installments = 10;
+                        $loan->installments = $request->installments;
                         $loan->fee = $fee;
-                        $loan->g_name = $g_name;
-                        $loan->g_account_no = $g_account;
                         $loan->token = Str::random(5);
-                        $loan->perInstallmentAmount = (int)$request->amount / 10;
+                        $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installments;
                         $loan->save();
+                        $g_infos = array_combine($request->g_name, $request->g_account_no);
 
+                        foreach($g_infos as $g_name => $g_number) {
+                            $garantor = new Garantor();
+                            $garantor->loan_id = $loan->id;
+                            $garantor->Loan_method = 'edu_loan';
+
+                            $garantor->g_name = $g_name;
+                            $garantor->g_mobile_number = $g_number;
+                            $garantor->save();
+                        }
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
                     }
                 }
-                return redirect('/')->with('status', 'Wrong Gaurantor Info');
             }
+            return redirect('/')->with('status', 'Wrong Gaurantor Info');
         }   else {
             return redirect('/')->with('status', 'You must have savings for loan');
         }

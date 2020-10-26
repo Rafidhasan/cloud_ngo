@@ -359,7 +359,7 @@ class AdminController extends Controller
             ->where('business_loans.user_id', '=', $request->id)
             ->first();
 
-        $garantors = DB::table('garantors')->where('loan_id', $user->loan_id)->get();
+        $garantors = DB::table('garantors')->where('loan_id', $user->loan_id)->where('garantors.loan_method', '=', "business_loan")->get();
 
         return view('admin.loans.showSingleApprovalBusinessLoan', [
             'user' => $user,
@@ -385,14 +385,17 @@ class AdminController extends Controller
 
     public function showSingleMemberLoansEdu(Request $request) {
         $user = DB::table('users')
-            ->join('Edu_loans', 'users.id', '=', 'Edu_loans.user_id')
-            ->where('Edu_loans.token', '=', $request->token)
-            ->where('Edu_loans.approved', '=', 0)
-            ->where('Edu_loans.user_id', '=', $request->id)
+            ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
+            ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
+            ->where('edu_loans.token', '=', $request->token)
+            ->where('edu_loans.user_id', '=', $request->id)
             ->first();
 
+        $garantors = DB::table('garantors')->where('loan_id', $user->loan_id)->where('garantors.loan_method', '=', "edu_loan")->get();
+
         return view('admin.loans.showSingleApprovalEduLoan', [
-            'user' => $user
+            'user' => $user,
+            'garantors' => $garantors
         ]);
     }
 
@@ -475,31 +478,17 @@ class AdminController extends Controller
         if(isset($loan->g_account_no)) {
             if($loan->g_approved == 1) {
                 $loan->approved = 1;
-            $loan->save();
-
-                $username = "Alauddin101";
-                $hash = "4f9ec55ab0531a44a466910119d97847";
-                $numbers = $user_info->mobile_number; //Recipient Phone Number multiple number must be separated by comma
-                $message = 'Your loan has been approved by NGO and garantor. Loan amount : '. $loan->amount;
-
-
-                $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
-
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-                $response = curl_exec($ch);
-                curl_close ($ch);
+                $loan->save();
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Wait for Garantor to accept first');
             }
         }   else {
-            dd('minimum 1ta garantor thakte hbe');
+            $loan->approved = 1;
+            $loan->save();
+
+            return redirect('/admin/loans')->with('status', 'loan accepted');
         }
     }
 

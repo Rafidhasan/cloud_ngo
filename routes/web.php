@@ -102,7 +102,7 @@ Route::get('/business_loan','LoanController@businessLoanIndex');
 Route::post('/business_loan/{id}','LoanController@businessLoanCreate');
 
 Route::get('/emp_loan', 'LoanController@employeeLoanIndex');
-Route::post('/emp_loan/{id}', 'LoanController@employeeLoa/sinnCreate');
+Route::post('/emp_loan/{id}', 'LoanController@employeeLoanCreate');
 
 Route::get('/edu_loan', 'LoanController@educationLoanIndex');
 Route::post('/edu_loan/{id}', 'LoanController@educationLoanCreate');
