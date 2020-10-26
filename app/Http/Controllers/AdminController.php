@@ -370,13 +370,16 @@ class AdminController extends Controller
     public function showSingleMemberLoansEmployee(Request $request) {
         $user = DB::table('users')
             ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
+            ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
             ->where('employee_loans.token', '=', $request->token)
-            ->where('employee_loans.approved', '=', 0)
             ->where('employee_loans.user_id', '=', $request->id)
             ->first();
 
+        $garantors = DB::table('garantors')->where('loan_id', $user->loan_id)->where('garantors.loan_method', '=', "employee_loan")->get();
+
         return view('admin.loans.showSingleApprovalEmployeeLoan', [
-            'user' => $user
+            'user' => $user,
+            'garantors' => $garantors
         ]);
     }
 

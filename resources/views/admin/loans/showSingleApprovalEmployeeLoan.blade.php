@@ -21,9 +21,9 @@
                                 <li><strong>Thana: </strong>{{ $user->thana }}</li>
                             </ul>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <h4>Security Information</h4>
-                            <img src="{{ asset('/storage/nid_or_birth_certificate_image/'.$user->nid_image)}}" height="250" width="500" alt="">
+                            <img src="{{ asset('/storage/nid_or_birth_certificate_image/'.$user->nid_image)}}"height="200" width="300" alt="">
 
                             <ul class="mt-4" style="font-size: 20px">
                                 <li><strong>NID/Birth Certificate Number: </strong>{{ $user->NID_or_birth_certificate_number }}</li>
@@ -32,7 +32,7 @@
                                 <li><strong>Nominee NID: </strong>{{ $user->nominee_nid }}</li>
                             </ul>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <h4>Loan Information</h4>
                             <ul class="mt-4" style="font-size: 20px">
                                 <li><strong>Loan Method: </strong>Business Loan</li>
@@ -54,6 +54,25 @@
                                     </div>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="mb-4">Garantor Information</h4>
+                            <div style="font-size: 20px">
+                                @foreach ($garantors as $key => $garantor)
+                                <ul>
+                                    <strong style="color: dodgerblue">{{ $key + 1 }}</strong>
+                                    <li><strong>Garantor Name: </strong><a href="/admin/showGProfile/{{ $garantor->g_mobile_number}}">{{ $garantor->g_name }}</a></li>
+                                    <li><strong>GarantorNumber: </strong><a href="/admin/showGProfile/{{ $garantor->g_mobile_number}}">{{ $garantor->g_mobile_number }}</a></li>
+                                    <li>
+                                        @if ($garantor->g_approved == 0)
+                                            <strong>Status: </strong><span style="color: red">Not Approved</span>
+                                        @else
+                                            <strong>Status: </strong><span style="color: green">Approved</span>
+                                        @endif
+                                    </li>
+                                </ul>
+                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>

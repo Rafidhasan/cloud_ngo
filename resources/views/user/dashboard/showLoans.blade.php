@@ -6,7 +6,7 @@
 
             {{-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> --}}
 
-            <h2>Loans for Approval</h2><br><br>
+            <h2>Loans</h2><br><br>
             <div class="table-responsive">
               <table class="table table-striped table-sm">
                 <thead>
@@ -45,7 +45,7 @@
                             @else
                                 <a href="singleShowLoanBusiness/{{ $user['user_id'] }}/{{ $user['token'] }}">Pay</a>
                             @endif
-                        @elseif (isset($user->office_no))
+                        @elseif (isset($user['office_no']))
                         @if ($user['paid'] == 1)
                                 Wait for Admin to Approve. Your loan is  completed
                             @else

@@ -60,7 +60,7 @@
                     </td>
                     <td>
                         @if (isset($user->business_name))
-                            <a href="/g_loan/business/accept/{{ $user->user_id }}/{{ $user->token }}/{{ $user->loan_id }}">Accept</a>
+                        <a href="/g_loan/business/accept/{{ $user->user_id }}/{{ $user->token }}/{{ $user->loan_id }}">Accept</a>
                         @elseif (isset($user->office_no))
                             <a href="/g_loan/emp/accept/{{ $user->user_id }}/{{ $user->token }}">Accept</a>
                         @else
