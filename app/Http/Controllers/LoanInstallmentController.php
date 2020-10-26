@@ -129,6 +129,9 @@ class LoanInstallmentController extends Controller
 
                 $business_loan = Businessloan::where('token', $request->token)->first();
 
+                $loan->net_amount = 0;
+                $loan->save();
+
                 $business_loan->completed = 1;
                 $business_loan->save();
 
@@ -312,7 +315,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -336,7 +339,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -382,7 +385,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -406,7 +409,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -426,7 +429,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -473,7 +476,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -497,7 +500,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -517,7 +520,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -538,7 +541,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -584,7 +587,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -608,7 +611,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -628,7 +631,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -649,7 +652,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -669,7 +672,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
                     //for sixth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -715,7 +718,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -739,7 +742,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -759,7 +762,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -780,7 +783,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -800,7 +803,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
                     //for sixth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -820,7 +823,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
                     //for seventh month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -867,7 +870,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -891,7 +894,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -911,7 +914,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -932,7 +935,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -952,7 +955,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
                     //for sixth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -972,7 +975,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
                     //for seventh month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -993,7 +996,7 @@ class LoanInstallmentController extends Controller
                         ]);
                     }
 
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
                     //for eigth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1039,7 +1042,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1063,7 +1066,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1083,7 +1086,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -1104,7 +1107,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1124,7 +1127,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
                     //for sixth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1144,7 +1147,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
                     //for seventh month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1165,7 +1168,7 @@ class LoanInstallmentController extends Controller
                         ]);
                     }
 
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
                     //for eigth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1185,7 +1188,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
+                }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
                     //for nine month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1232,7 +1235,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1256,7 +1259,7 @@ class LoanInstallmentController extends Controller
                             dd('logic');
                         }
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(2)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*2 && $total_amount < $user[0]['perInstallmentAmount']*3)) {
                     //For third month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1276,7 +1279,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
                     // forth month
 
                     if($latest->net_amount == 0) {
@@ -1297,7 +1300,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
                     //for fifth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1317,7 +1320,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
                     //for sixth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1337,7 +1340,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
                     //for seventh month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1358,7 +1361,7 @@ class LoanInstallmentController extends Controller
                         ]);
                     }
 
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(7)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*7 && $total_amount < $user[0]['perInstallmentAmount']*8)) {
                     //for eigth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1378,7 +1381,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
+                }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
                     //for nine month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1399,7 +1402,7 @@ class LoanInstallmentController extends Controller
                             'next_month_date' => $next_month_date
                         ]);
                     }
-                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(9)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*9 && $total_amount < $user[0]['perInstallmentAmount']*10)) {
+                }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(9)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*9 && $total_amount < $user[0]['perInstallmentAmount']*10)) {
                     //for tenth month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');

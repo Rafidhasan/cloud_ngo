@@ -35,7 +35,7 @@
                             <h5 class="card-title">Loan Amount</h5>
                             <h1 id="value" class="card-text">
                                 @if (isset($loan))
-                                    {{ $loan->amount }}
+                                {{ $loan->loan_amount }}
                                 @else
                                     No Loan
                                 @endif

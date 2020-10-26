@@ -49,9 +49,10 @@ class CreateLoansTable extends Migration
             $table->integer('salary');
             $table->string('fee')->nullable();
             $table->boolean('approved')->default(0);
-            $table->dateTime('approved_date')->nullable();
             $table->boolean('completed')->default(0);
             $table->boolean('paid')->default(0);
+            $table->dateTime('approved_date')->nullable();
+            $table->boolean('g_approved')->default(0);
             $table->integer('amount');
             $table->integer('installments');
             $table->integer('perInstallmentAmount');
@@ -70,16 +71,18 @@ class CreateLoansTable extends Migration
             $table->string('org_address');
             $table->string('level');
             $table->string('edu_no');
-            $table->string('fee')->nullable();
-            $table->boolean('approved')->default(0);
             $table->integer('amount');
             $table->integer('installments');
             $table->integer('perInstallmentAmount');
             $table->string('token');
-            $table->timestamps();
-            $table->date('approved_date')->nulllable();
+            $table->string('fee')->nullable();
+            $table->boolean('approved')->default(0);
             $table->boolean('completed')->default(0);
             $table->boolean('paid')->default(0);
+            $table->dateTime('approved_date')->nullable();
+            $table->boolean('g_approved')->default(0);
+            $table->timestamps();
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');

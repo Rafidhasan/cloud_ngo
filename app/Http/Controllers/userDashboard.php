@@ -25,12 +25,13 @@ class userDashboard extends Controller
 {
     public function index() {
         $user = User::where('id', Auth::user()->id)->first();
-        $saving = SavingAcount::where('user_id', $user->id)->first();
+        $saving = SavingAcount::where('user_id', $user->id)->latest()->first();
 
         $edu_loans = DB::table('edu_loans')
             ->join('loan_installments', 'edu_loans.id', '=', 'loan_installments.loan_id')
             ->where('edu_loans.user_id', $user->id)
             ->where('loan_installments.approved', 1)
+            ->select('edu_loans.amount as loan_amount', 'loan_installments.net_amount')
             ->orderBy('loan_installments.created_at', 'desc')
             ->get()
             ->toArray();
@@ -39,6 +40,7 @@ class userDashboard extends Controller
             ->join('loan_installments', 'employee_loans.id', '=', 'loan_installments.loan_id')
             ->where('employee_loans.user_id', $user->id)
             ->where('loan_installments.approved', 1)
+            ->select('employee_loans.amount as loan_amount', 'loan_installments.net_amount')
             ->orderBy('loan_installments.created_at', 'desc')
             ->get()
             ->toArray();
@@ -46,7 +48,7 @@ class userDashboard extends Controller
         $business_loans = DB::table('business_loans')
             ->join('loan_installments', 'business_loans.id', '=', 'loan_installments.loan_id')
             ->where('business_loans.user_id', $user->id)
-            ->where('loan_installments.approved', 1)
+            ->select('business_loans.amount as loan_amount','loan_installments.net_amount')
             ->orderBy('loan_installments.created_at', 'desc')
             ->get()
             ->toArray();
