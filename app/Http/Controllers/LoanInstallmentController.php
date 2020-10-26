@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EduLoan;
 use App\EmployeeLoan;
 use App\BusinessLoan;
+use App\SavingAcount;
 
 use App\LoanInstallment;
 
@@ -85,20 +86,23 @@ class LoanInstallmentController extends Controller
 
     public function acceptSingleLoanInstallment(Request $request) {
         $edu_loans = DB::table('edu_loans')
+            ->join('users', 'edu_loans.user_id', '=', 'users.id')
             ->join('loan_installments', 'edu_loans.id', '=', 'loan_installments.loan_id')
             ->where('loan_installments.tracking_number', $request->tracking_number)
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('employee_loans')
+            ->join('users', 'employee_loans.user_id', '=', 'users.id')
             ->join('loan_installments', 'employee_loans.id', '=', 'loan_installments.loan_id')
             ->where('loan_installments.tracking_number', $request->tracking_number)
             ->get()
             ->toArray();
 
         $business_loans = DB::table('business_loans')
+            ->join('users', 'business_loans.user_id', '=', 'users.id')
             ->join('loan_installments', 'business_loans.id', '=', 'loan_installments.loan_id')
-            ->select('business_loans.amount as total', 'business_loans.*', 'loan_installments.*')
+            ->select('users.id as userId', 'business_loans.amount as total', 'business_loans.*', 'loan_installments.*')
             ->where('loan_installments.tracking_number', $request->tracking_number)
             ->get()
             ->toArray();
@@ -117,6 +121,18 @@ class LoanInstallmentController extends Controller
 
                 return redirect('/admin')->with('status', 'Full Loan Installment is approved and Completed');
 
+            }   else if($loan->net_amount <= 0) {
+                $saving = SavingAcount::where('user_id', $user[0]->userId)->latest()->first();
+                $saving->total -= $loan->net_amount;
+
+                $saving->save();
+
+                $business_loan = Businessloan::where('token', $request->token)->first();
+
+                $business_loan->completed = 1;
+                $business_loan->save();
+
+                return redirect('/admin')->with('status', 'Full Loan Installment is approved and Completed');
             }   else {
                 return redirect('/admin')->with('status', 'Loan Installment is approved');
             }
@@ -248,7 +264,7 @@ class LoanInstallmentController extends Controller
                     'next_month_date' => $next_month_date
                 ]);
             }   else {
-                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
+                if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']) || ($total_amount <= $user[0]['perInstallmentAmount'])) {
                     //For Second Month
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
@@ -1408,7 +1424,7 @@ class LoanInstallmentController extends Controller
                 }
             }
         }
-        dd($installments);
+        dd("mane ki");
     }
 
     public function firstStore(Request $request) {
@@ -1459,7 +1475,7 @@ class LoanInstallmentController extends Controller
 
             $loan->save();
 
-            if($loan->net_amount == 0) {
+            if($loan->net_amount <= 0) {
                 if(isset($users[0]['business_name'])) {
                     $business_loan = BusinessLoan::where('token', $request->token)->first();
 
