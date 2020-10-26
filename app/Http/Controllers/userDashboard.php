@@ -65,8 +65,6 @@ class userDashboard extends Controller
                 'loan' => $loan[0]
             ]);
         }
-
-
     }
 
     public function approvedLoans() {
@@ -92,6 +90,7 @@ class userDashboard extends Controller
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
             ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
             ->where('business_loans.approved', '=', 0)
+            ->where('business_loans.g_approved', '=', 0)
             ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
             ->where('garantors.loan_method', 'business_loan')
             ->get()
@@ -117,6 +116,8 @@ class userDashboard extends Controller
 
                     $loan->g_approved = 1;
                     $loan->save();
+                }   else {
+                    dd();
                 }
                 return redirect('/dashboard')->with('status', 'loan accepted');
             }   else {

@@ -55,7 +55,13 @@
                           <span data-feather="users"></span>
                           Users
                         </a>
-                      </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/registerUsers">
+                          <span data-feather="users"></span>
+                          Member Register
+                        </a>
+                    </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/admin/approveSavings">
                         <span data-feather="file"></span>

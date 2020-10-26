@@ -29,13 +29,45 @@ use DB;
 
 class AdminController extends Controller
 {
-    public function index(Request $request) {
+    public function index() {
+        $user = User::where('id', Auth::user()->id)->first();
+        $users = User::get();
+
+        $total_user = count($users);
+
+        $saving = SavingAcount::where('user_id', $user->id)->first();
+
+        $edu_loans = DB::table('edu_loans')
+            ->get()
+            ->toArray();
+
+        $employee_loans = DB::table('employee_loans')
+            ->get()
+            ->toArray();
+
+        $business_loans = DB::table('business_loans')
+            ->get()
+            ->toArray();
+
+        $loans = array_merge($edu_loans, $employee_loans, $business_loans);
+
+        $total_loans = count($loans);
+
+        return view('admin.dashboard.index', [
+            'user' => $user,
+            'saving' => $saving,
+            'total_user' => $total_user,
+            'total_loans' => $total_loans
+        ]);
+    }
+
+    public function show(Request $request) {
         $users = User::select('id', 'name', 'mobile_number')
         ->where('users.approved', 0)
         ->get();
 
         return view('admin.index', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
@@ -496,6 +528,7 @@ class AdminController extends Controller
             ->toArray();
 
         $users = array_merge($edu_loans, $employee_loans, $business_loans);
+
         return view('admin.showApprovedLoans', [
             'users' => $users
         ]);

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 //admin routes
 Route::get('/admin', 'AdminController@index')->middleware('admin');
+Route::get('/admin/registerUsers', 'AdminController@show')->middleware('admin');
 Route::get('/admin/showUsers', 'AdminController@showUsers')->middleware('admin');
 Route::get('/userInfo/{id}','AdminController@showSingleUser')->middleware('admin');
 
@@ -31,7 +32,7 @@ Route::get('/reject/{id}','AdminController@rejectSingleUser')->middleware('admin
 Route::get('/deleteSingleUser/{id}', 'AdminController@deleteSingleUser')->middleware('admin');
 
 //admin user record controller routes
-Route::get('/adm/approveLoansin/showUser/{id}', 'AdminController@editUser')->middleware('admin');
+Route::get('/adm/approveLoans/showUser/{id}', 'AdminController@editUser')->middleware('admin');
 Route::put('/admin/userUpdate/{id}', 'AdminController@updateUser')->middleware('admin');
 
 // admin savings form routes
