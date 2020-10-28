@@ -78,6 +78,7 @@ class LoanInstallmentController extends Controller
             ->toArray();
 
         $users = array_merge($edu_loans, $employee_loans, $business_loans);
+
         $date = Carbon::create($users[0]->created_at);
 
         $ending = date('d-m-Y', strtotime($date->addMonth($users[0]->installments)));
@@ -129,8 +130,7 @@ class LoanInstallmentController extends Controller
 
             }   else if($loan->net_amount <= 0) {
                 $saving = SavingAcount::where('user_id', $user[0]->userId)->latest()->first();
-                $saving->total -= $loan->net_amount;
-
+                $saving->total += (-$loan->net_amount);
                 $saving->save();
 
                 $business_loan = Businessloan::where('token', $request->token)->first();
@@ -145,13 +145,12 @@ class LoanInstallmentController extends Controller
             }   else {
                 return redirect('/admin')->with('status', 'Loan Installment is approved');
             }
-        }   else if(isset($user[0]->office_address)) {
+        }   else if(isset($user[0]->org_name)) {
             $loan = LoanInstallment::where('tracking_number', $request->tracking_number)->first();
             $loan->approved = 1;
             $loan->save();
             if($loan->net_amount == 0) {
                 $meployee_loan = EmployeeLoan::where('token', $request->token)->first();
-
                 $meployee_loan->completed = 1;
                 $meployee_loan->save();
 

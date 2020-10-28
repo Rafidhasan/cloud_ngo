@@ -131,36 +131,50 @@ class userDashboard extends Controller
     public function g_acceptEm(Request $request) {
         $loan = EmployeeLoan::where('token', $request->token)
             ->first();
+        $garantors = Garantor::where('loan_method', 'employee_loan')->where('g_mobile_number', Auth::user()->mobile_number)->get();
+        $row = count($garantors);
 
-        if(isset($loan->g_account_no)) {
+        foreach ($garantors as $key => $garantor) {
             if($loan->g_approved == 0) {
-                $loan->g_approved = 1;
-                $loan->save();
+                if($row == 1) {
+                    $garantor = Garantor::where('loan_method', 'employee_loan')->where('g_mobile_number', Auth::user()->mobile_number)->first();
+                    $garantor->g_approved = 1;
+                    $garantor->save();
 
+                    $loan->g_approved = 1;
+                    $loan->save();
+                }   else {
+                    dd();
+                }
                 return redirect('/dashboard')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Already Approved');
             }
-        }   else {
-            return redirect('/dashboard')->with('status', 'loan meaningless');
         }
     }
 
     public function g_acceptEd(Request $request) {
         $loan = EduLoan::where('token', $request->token)
             ->first();
+        $garantors = Garantor::where('loan_method', 'edu_loan')->where('g_mobile_number', Auth::user()->mobile_number)->get();
+        $row = count($garantors);
 
-        if(isset($loan->g_account_no)) {
+        foreach ($garantors as $key => $garantor) {
             if($loan->g_approved == 0) {
-                $loan->g_approved = 1;
-                $loan->save();
+                if($row == 1) {
+                    $garantor = Garantor::where('loan_method', 'edu_loan')->where('g_mobile_number', Auth::user()->mobile_number)->first();
+                    $garantor->g_approved = 1;
+                    $garantor->save();
 
+                    $loan->g_approved = 1;
+                    $loan->save();
+                }   else {
+                    dd();
+                }
                 return redirect('/dashboard')->with('status', 'loan accepted');
             }   else {
                 return redirect('/admin')->with('status', 'Already Approved');
             }
-        }   else {
-            return redirect('/dashboard')->with('status', 'loan meaningless');
         }
     }
 

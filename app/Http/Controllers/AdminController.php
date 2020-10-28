@@ -447,6 +447,7 @@ class AdminController extends Controller
         if(isset($loan->g_account_no)) {
             if($loan->g_approved == 1) {
                 $loan->approved = 1;
+                $loan->approved_date = now();
                 $loan->save();
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
@@ -455,7 +456,14 @@ class AdminController extends Controller
             }
         }   else {
             $loan->approved = 1;
+            $loan->approved_date = now();
+            $savings = SavingAcount::where('user_id', $loan->user_id)->latest()->first();
+
+            $savings->total = (int)$savings->total - (int)$loan->fee;
+
             $loan->save();
+
+            $savings->save();
 
             return redirect('/admin/loans')->with('status', 'loan accepted');
         }
@@ -478,6 +486,7 @@ class AdminController extends Controller
         if(isset($loan->g_account_no)) {
             if($loan->g_approved == 1) {
                 $loan->approved = 1;
+                $loan->approved_date = now();
                 $loan->save();
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
@@ -486,7 +495,14 @@ class AdminController extends Controller
             }
         }   else {
             $loan->approved = 1;
+            $loan->approved_date = now();
+            $savings = SavingAcount::where('user_id', $loan->user_id)->latest()->first();
+
+            $savings->total = (int)$savings->total - (int)$loan->fee;
+
             $loan->save();
+
+            $savings->save();
 
             return redirect('/admin/loans')->with('status', 'loan accepted');
         }

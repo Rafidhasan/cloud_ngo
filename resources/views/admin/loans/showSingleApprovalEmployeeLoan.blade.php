@@ -35,7 +35,7 @@
                         <div class="col-md-3">
                             <h4>Loan Information</h4>
                             <ul class="mt-4" style="font-size: 20px">
-                                <li><strong>Loan Method: </strong>Business Loan</li>
+                                <li><strong>Loan Method: </strong>Employee Loan</li>
                                 <li><strong>Loan Amount: </strong>{{ $user->amount }}</li>
                                 <li><strong>Installments: </strong>{{ $user->installments }}</li>
                                 <li><strong>Organization Name: </strong>{{ $user->org_name }}</li>

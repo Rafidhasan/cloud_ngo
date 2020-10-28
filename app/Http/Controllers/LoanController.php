@@ -128,7 +128,7 @@ class LoanController extends Controller
                         $loan->position = $request->position;
                         $loan->salary = $request->salary;
                         $loan->amount = $request->amount;
-                        $loan->installments = 10;
+                        $loan->installments = $request->installments;
                         $loan->fee = $fee;
                         $loan->token = Str::random(5);
                         $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installments;
