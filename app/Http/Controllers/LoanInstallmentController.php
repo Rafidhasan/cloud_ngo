@@ -1428,17 +1428,17 @@ class LoanInstallmentController extends Controller
     }
 
     public function employeeloanInstallmentIndex(Request $request) {
-        $edu_loans = EduLoan::where("token", $request->token)
+        $edu_loans = EduLoan::where("user_id", $request->id)
             ->where('approved', 1)
             ->get()
             ->toArray();
 
-        $employee_loans = EmployeeLoan::where('token', $request->token)
+        $employee_loans = EmployeeLoan::where('user_id', $request->id)
             ->where('approved', 1)
             ->get()
             ->toArray();
 
-        $business_loans = BusinessLoan::where('token', $request->token)
+        $business_loans = BusinessLoan::where('user_id', $request->id)
             ->where('approved', 1)
             ->get()
             ->toArray();
@@ -1785,11 +1785,11 @@ class LoanInstallmentController extends Controller
             }
         }   else if($installment == 6) {
             $date = Carbon::create($user[0]['created_at']);
-
             $ending = date('d-m-Y', strtotime($date->addMonth($user[0]['installments'])));
 
             if($loan == '') {
                 //For First month
+
                 $staring_date = date('d-m-Y', strtotime($date));
                 $ending = date('d-m-Y', strtotime($date->addMonth($user[0]['installments'])));
 
@@ -3007,6 +3007,7 @@ class LoanInstallmentController extends Controller
                 }
             }
         }   else if($installment == 6) {
+
             $date = Carbon::create($user[0]['created_at']);
 
             $ending = date('d-m-Y', strtotime($date->addMonth($user[0]['installments'])));

@@ -24,7 +24,7 @@
 	<!-- Main Stylesheets -->
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 </head>
-<body>
+<body style="background-color: #000;">
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -40,7 +40,7 @@
         </div>
         @endif
 		<a href="/" class="site-logo">
-			<img src="{{ asset('img/logo.png') }}" alt="">
+			<img src="{{ asset('img/loan_logo.png') }}" width="70">
 		</a>
 		<nav class="header-nav">
 			<ul class="main-menu">
@@ -71,7 +71,7 @@
 			</ul>
 			<div class="header-right">
 				<a href="#" class="hr-btn"><i class="flaticon-029-telephone-1"></i>Call us now!</a>
-				<div class="hr-btn hr-btn-2">+45 332 65767 42</div>
+				<div class="hr-btn hr-btn-2">+880 1772974123</div>
 			</div>
 		</nav>
 	</header>
@@ -80,72 +80,6 @@
     <main>
         @yield('content')
     </main>
-
-    	<!-- Footer Section -->
-	<footer class="footer-section">
-		<div class="container">
-			<a href="index.html" class="footer-logo">
-				<img src="img/logo.png" alt="">
-			</a>
-			<div class="row">
-				<div class="col-lg-3 col-sm-6">
-					<div class="footer-widget">
-						<h2>What we do</h2>
-						<ul>
-							<li><a href="#">Loans</a></li>
-							<li><a href="#">Car loans</a></li>
-							<li><a href="#">Debt consolidation loans</a></li>
-							<li><a href="#">Home improvement loans</a></li>
-							<li><a href="#"> Wedding loans</a></li>
-							<li><a href="#">Innovative Finance ISA</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="footer-widget">
-						<h2>About us</h2>
-						<ul>
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Our story</a></li>
-							<li><a href="#">Meet the board</a></li>
-							<li><a href="#">Meet the leadership team</a></li>
-							<li><a href="#">Awards</a></li>
-							<li><a href="#">Careers</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="footer-widget">
-						<h2>Legal</h2>
-						<ul>
-							<li><a href="#">Privacy policy</a></li>
-							<li><a href="#">Loans2go principles</a></li>
-							<li><a href="#">Website terms</a></li>
-							<li><a href="#">Cookie policy</a></li>
-							<li><a href="#">Conflicts policy</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="footer-widget">
-						<h2>Site Info</h2>
-						<ul>
-							<li><a href="#">Support</a></li>
-							<li><a href="#">FAQ</a></li>
-							<li><a href="#">Sitemap</a></li>
-							<li><a href="#">Careers</a></li>
-							<li><a href="#">Contact us</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem por incididunt ut labore et dolore mag na aliqua.  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Ut gravida mattis magna, non varius lorem sodales nec. In libero orci, ornare non nisl.</p>
-			<div class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">OfficeName</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-		</div>
-	</footer>
-	<!-- Footer Section end -->
 
 	<!--====== Javascripts & Jquery ======-->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>

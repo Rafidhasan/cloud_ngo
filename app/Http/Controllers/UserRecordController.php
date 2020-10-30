@@ -51,6 +51,7 @@ class UserRecordController extends Controller
 
          if($user == '') {
             if($request->refer_account_number == null) {
+                $user = User::select('mobile_number')->get();
                 $user = new User();
                 $digits = 5;
                 $date = $request->date_of_birth;
@@ -77,8 +78,8 @@ class UserRecordController extends Controller
                     $user_file->move('storage/profile-image', $fileName);
                     $user->image = $fileName;
                 }   else {
-                    return $request;
                     $user->image = ' ';
+                    return redirect('/')->with('status', 'Must have Image');
                 }
 
                 if($request->hasFile('nid_image')) {
@@ -88,34 +89,34 @@ class UserRecordController extends Controller
                     $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
                     $user->nid_image = $fileName;
                 }   else {
-                    return $request;
                     $user->nid_image = ' ';
+                    return redirect('/')->with('status', 'Must have Image');
                 }
 
-                if($request->hasFile('nominee_nid')) {
-                    $nid_file = $request->file('nominee_nid');
-                    $extension = $nid_file->getClientOriginalExtension();
-                    $fileName = time() . '.' .$extension;
-                    $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
-                    $user->nominee_nid = $fileName;
-                }   else {
-                    return $request;
-                    $user->nominee_nid = ' ';
-                }
+                // if($request->hasFile('nominee_nid')) {
+                //     $nid_file = $request->file('nominee_nid');
+                //     $extension = $nid_file->getClientOriginalExtension();
+                //     $fileName = time() . '.' .$extension;
+                //     $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
+                //     $user->nominee_nid = $fileName;
+                // }   else {
+                //     return $request;
+                //     $user->nominee_nid = ' ';
+                // }
                 $user->save();
 
                 $notification = new UserNotification();
                 $notification->user_id = $user->id;
-                $notification->status = 'Thanks for Registration. your password is '.$token;
+                $notification->status = 'Thank you for Registration. Your PIN is <span style="color:#f43f00">'.$token.'</span>';
 
                 $notification->save();
 
                 return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
              }  else {
                 $user = new User();
-
+                $digits = 5;
                 $date = $request->date_of_birth;
-                $token = Str::random(5);
+                $token = rand(pow(10, $digits-1), pow(10, $digits)-1);
 
                 $user->name = $request->input('name');
                 $user->mobile_number = $request->input('mobile_number');
@@ -127,7 +128,6 @@ class UserRecordController extends Controller
                 $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
                 $user->password = \Hash::make($token);
                 $user->refer_account_number = $request->refer_account_number;
-
 
                 if($request->hasFile('image')) {
                     $user_file = $request->file('image');
@@ -150,11 +150,11 @@ class UserRecordController extends Controller
                     return $request;
                     $user->nid_image = ' ';
                 }
+                $user->save();
 
                 $notification = new UserNotification();
-                $notification->user_id = $request->id;
+                $notification->user_id = $user->id;
                 $notification->status = 'Wait for Authity to validate. Your password is '.$token;
-                dd($user->id);
 
                 $notification->save();
 

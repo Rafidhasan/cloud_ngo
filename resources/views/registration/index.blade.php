@@ -23,12 +23,6 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <label for="user_image" class="text-white">Your Image</label>
-                        <input type="file" name="image" class="form-control-file" required>
-                        @error('image')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
                         <input type="text" name="fathers_name" placeholder="Your Father's/Husbend's Name" required autofocus>
                         @error('fathers_name')
                             <span class="text-danger">{{ $message }}</span>
@@ -39,6 +33,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
+                        <label for="date_of_birth" class="text-white">Date of Birth</label>
                         <input type="date" class="form-control" name="date_of_birth" placeholder="Enter you date of birth" required autofocus>
                         @error('date_of_birth')
                             <span class="text-danger">{{ $message }}</span>
@@ -51,12 +46,6 @@
 
                         <input type="text" name="thana" placeholder="Your related Thana" required autofocus>
                         @error('thana')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
-                        <label for="nid_image" class="text-white">Your NID Card / Birth Certificate Image</label>
-                        <input type="file" name="nid_image" class="form-control-file" required>
-                        @error('nid_image')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
@@ -75,27 +64,33 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <label for="nominee_nid" class="text-white">Enter Nominee NID</label>
-                        <input type="file" name="nominee_nid" class="form-control-file" required>
-                        @error('nominee_nid')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
                         <input type="text" name="refer_account_number" placeholder="Reference Account number" autofocus>
                         @error('refer_account_number')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <p class="text-white">Note About Refer Account number</p>
-
-						<button type="submit" class="site-btn">Register</button>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="user_image" class="text-white">Your Image</label>
+                                <input type="file" name="image" class="form-control-file" required>
+                                @error('image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="nid_image" class="text-white">Your NID Card / Birth Certificate Image</label>
+                                <input type="file" name="nid_image" class="form-control-file" required>
+                                @error('nid_image')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="submit" class="site-btn">Register</button>
+                            </div>
+                        </div>
 					</form>
 				</div>
 			</div>
-		</div>
-		<div class="hero-slider owl-carousel">
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/1.jpg"></div>
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/2.jpg"></div>
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/3.jpg"></div>
 		</div>
 	</section>
 	<!-- Hero Section end -->

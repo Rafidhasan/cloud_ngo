@@ -137,7 +137,9 @@ class userDashboard extends Controller
         foreach ($garantors as $key => $garantor) {
             if($loan->g_approved == 0) {
                 if($row == 1) {
+
                     $garantor = Garantor::where('loan_method', 'employee_loan')->where('g_mobile_number', Auth::user()->mobile_number)->first();
+                    dd($garantor);
                     $garantor->g_approved = 1;
                     $garantor->save();
 

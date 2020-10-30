@@ -13,7 +13,7 @@
 						<a href="#" class="site-btn sb-dark">Find out more</a>
 					</div>
 				</div> --}}
-				<div class="col-lg-12" class="center">
+				<div class="col-lg-6 mx-auto">
                     @auth
                     @if ($user != '')
                     <div class="alert alert-primary" role="alert" style="z-index: 9999">
@@ -32,6 +32,7 @@
                             @include('savingsForm.authForm')
                         @else
                         <form class="hero-form" method="post" action="/saving">
+                            <p class="text-white" style="font-size: 24px" id="show">Bkash account Number is 01772974123</p>
                             @csrf
                             <div class="form-group">
                                 <label class="text-white">Payment Method</label>
@@ -58,8 +59,8 @@
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <p class="text-white" style="font-size: 24px" id="show"></p>
-                            <button class="site-btn">Apply for Loan</button>
+
+                            <button class="site-btn">Save Amount</button>
                         </form>
                         @endif
                     </form>
@@ -80,11 +81,6 @@
                     </script>
 				</div>
 			</div>
-		</div>
-		<div class="hero-slider owl-carousel">
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/1.jpg"></div>
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/2.jpg"></div>
-			<div class="hs-item set-bg" data-setbg="img/hero-slider/3.jpg"></div>
 		</div>
 	</section>
 	<!-- Hero Section end -->
