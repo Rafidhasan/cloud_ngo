@@ -68,6 +68,11 @@ Route::get('/admin/approvedLoans', 'AdminController@approvedLoans')->middleware(
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');
 
+//withdraw form routes
+Route::get('/admin/withdraw', 'AdminController@showWithdraw');
+Route::get('/admin/withdraws/approve/{id}/{serial}', 'AdminController@approveWithdraws');
+Route::get('/admin/withdraws/reject/{id}/{serial}', 'AdminController@rejectWithdraws');
+
 Route::get('/', 'UserRecordController@index');
 
 Auth::routes();
@@ -125,3 +130,7 @@ Route::post('/loan_installment/{id}/{token}', 'LoanInstallmentController@create'
 
 Route::post('/first_loan_installment/{id}/{token}/{month}/{total}', "LoanInstallmentController@firstStore");
 Route::get('/prev_loan_details/{id}', 'LoanInstallmentController@showPrevLoanInstallments');
+
+// withdraw form routes
+Route::get('/withdraw', 'WithdrawController@index');
+Route::post('/withdraw/{id}', 'WithdrawController@create');

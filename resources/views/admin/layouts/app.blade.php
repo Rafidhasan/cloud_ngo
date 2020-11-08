@@ -99,6 +99,12 @@
                         </a>
                       </li>
                       <li class="nav-item">
+                        <a class="nav-link" href="/admin/withdraw">
+                          <span data-feather="layers"></span>
+                          Approved Withdraws
+                        </a>
+                      </li>
+                      <li class="nav-item">
                         <a class="nav-link" href="/admin/forgetPass">
                           <span data-feather="layers"></span>
                           Forget Pass

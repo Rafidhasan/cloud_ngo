@@ -20,6 +20,8 @@ use App\UserNotification;
 
 use App\Accounts;
 
+use App\Withdraw;
+
 use App\ForgetPass;
 use App\Forgetuser;
 
@@ -605,5 +607,34 @@ class AdminController extends Controller
         DB::table('forget_users')->where('id', '=', $request->id)->delete();
 
         return redirect('/admin')->with('status', "Not Approved. Notification send");
+    }
+
+    //withdraw form
+    public function showWithdraw() {
+        $users = DB::table('users')
+            ->join('withdraws', 'users.id', '=', 'withdraws.user_id')
+            ->where('withdraws.approved', 0)
+            ->get();
+
+        return view('admin.dashboard.withdrawShow', [
+            'users' => $users
+        ]);
+    }
+
+    public function approveWithdraws(Request $request) {
+        $user = Withdraw::where('user_id', $request->id)->where('serial', $request->serial)->first();
+        $user->approved = 1;
+        $user->save();
+
+        $savings = SavingAcount::where('user_id', $request->id)->latest()->first();
+        $savings->total = $savings->total - $user->amount;
+        $savings->save();
+
+        $notification = new UserNotification();
+        $notification->user_id = $request->id;
+        $notification->status = "Your Withdraw is approved and ".$user->amount. " is deducted from your savings";
+        $notification->save();
+
+        return redirect('/admin')->with('status', "Approved and Notification send");
     }
 }

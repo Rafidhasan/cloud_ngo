@@ -65,6 +65,7 @@
                     @if (Auth::user()->checkAdmin())
                         <li><a href="/admin" class="text-white">Admin</a></li>
                     @endif
+                    <li><a href="/withdraw" class="text-white">Withdraw</a></li>
                     <li><a class="text-white" href="/logout" role="submit">Logout</a></li>
                     <li><a class="text-white" href="/dashboard" class="text-white">Dashboard</a></li>
                 @endguest
