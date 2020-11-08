@@ -30,9 +30,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if ($users == "")
-                        Still Due for this users
-                    @else
+                    <tr>
+                        <td>
+                            @if ($users == "")
+                                Still Due for this users
+                            @else
+                        </td>
+                    </tr>
                     @foreach ($users as $key => $user)
                     <tr>
                         <td>{{ $key+1 }}</td>
@@ -50,7 +54,7 @@
                         <td>{{ $user->installments }}</td>
                         <td>{{ $user->perInstallmentAmount }}</td>
                         <td>{{ $user->total }}</td>
-                        <td>{{ date('d-m-Y', strtotime($user->this_month)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($user->next_month)) }}</td>
                         <td>{{ $ending }}</td>
                         <td><a class="btn btn-success btn-sm" href="/admin/loanInstallment/apporve/{{ $user->tracking_number }}/{{ $user->token }}">Approve</a></td>

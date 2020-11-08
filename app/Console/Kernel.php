@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\ServiceCharge'
+        'App\Console\Commands\ServiceCharge',
+        'App\Console\Commands\DefaultCharge'
     ];
 
     /**
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('day:everyMonth')->everyMinute();
         $schedule->command('day:juneFirst')->everyMinute();
     }
 

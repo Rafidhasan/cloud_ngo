@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 
 use App\SavingAcount;
 
+use App\UserNotification;
+
 use App\User;
 
 use DB;
@@ -86,10 +88,7 @@ class ServiceCharge extends Command
                 curl_close ($ch);
 
                 $accounts->save();
-
-
             }
-
         }
     }
 }

@@ -44,6 +44,18 @@ class User extends Authenticatable
         return $this->hasMany('App\SavingAcount');
     }
 
+    public function businessLoans() {
+        return $this->hasMany('App\BusinessLoan');
+    }
+
+    public function employeeLoans() {
+        return $this->hasMany('App\EmployeeLoan');
+    }
+
+    public function eduLoans() {
+        return $this->hasMany('App\EduLoan');
+    }
+
     public function checkTotal() {
         return $this->savings->flatten()->pluck('total')->last();
     }
@@ -54,5 +66,17 @@ class User extends Authenticatable
 
     public function savingAmount() {
         return $this->savings->flatten()->pluck('total')->last();
+    }
+
+    public function hasBusinessLoans() {
+        return $this->businessLoans->flatten()->pluck('user_id')->last();
+    }
+
+    public function hasEmployeeLoans() {
+        return $this->employeeLoans->flatten()->pluck('user_id')->last();
+    }
+
+    public function hasEduLoans() {
+        return $this->eduLoans->flatten()->pluck('user_id')->last();
     }
 }

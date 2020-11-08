@@ -107,7 +107,7 @@ class UserRecordController extends Controller
 
                 $notification = new UserNotification();
                 $notification->user_id = $user->id;
-                $notification->status = 'Thank you for Registration. Your PIN is <span style="color:#f43f00">'.$token.'</span>';
+                $notification->status = 'Thank you for Registration. Your PIN is '.$token;
 
                 $notification->save();
 
@@ -181,7 +181,7 @@ class UserRecordController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            if($user->approved == 1) {
+            if($user->approved == 0) {
                 return redirect('/');
             }   else {
                 return redirect('/login')->with('status', 'wait for authority to approve');

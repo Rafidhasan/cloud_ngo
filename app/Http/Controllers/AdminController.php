@@ -32,14 +32,14 @@ class AdminController extends Controller
     public function index() {
         $user = User::where('id', Auth::user()->id)->first();
         $users = User::get();
+        $total_user = 0;
 
         foreach($users as $user) {
             if($user->checkAdmin() != "admin") {
                 $person[] = $user;
+                $total_user = count($person);
             }
         }
-
-        $total_user = count($person);
 
         $saving = SavingAcount::where('user_id', $user->id)->first();
 

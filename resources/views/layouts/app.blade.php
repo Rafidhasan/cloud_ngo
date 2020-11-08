@@ -36,7 +36,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h3>{{ session('status') }}</h3>
+            <h3>{!! session('status') !!}</h3>
         </div>
         @endif
 		<a href="/" class="site-logo">
