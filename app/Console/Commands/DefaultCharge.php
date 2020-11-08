@@ -56,9 +56,9 @@ class DefaultCharge extends Command
                 $loan = BusinessLoan::where('user_id', $user->id)->where('completed', 0)->first();
                 $loan_installments = LoanInstallment::where('loan_id', $loan->id)->latest()->first();
 
-                // $to = \Carbon\Carbon::createFromFormat($loan->approved_date);
-                // $from = \Carbon\Carbon::createFromFormat($loan_installments->this_month);
-                // $net_installment_month = $to->diffInMonths($from);
+                $to = \Carbon\Carbon::parse($loan->approved_date)->floorMonth();
+                $from = \Carbon\Carbon::parse($loan_installments->this_month)->floorMonth();
+                $net_installment_month = $to->diffInMonths($from);
 
                 if($loan_installments == '') {
                     // user doesn't give first installment
