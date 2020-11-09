@@ -56,10 +56,6 @@ class DefaultCharge extends Command
                 $loan = BusinessLoan::where('user_id', $user->id)->where('completed', 0)->first();
                 $loan_installments = LoanInstallment::where('loan_id', $loan->id)->latest()->first();
 
-                $to = \Carbon\Carbon::parse($loan->approved_date)->floorMonth();
-                $from = \Carbon\Carbon::parse($loan_installments->this_month)->floorMonth();
-                $net_installment_month = $to->diffInMonths($from);
-
                 if($loan_installments == '') {
                     // user doesn't give first installment
                     $saving = SavingAcount::where('user_id', $user->id)->latest()->first();
@@ -81,28 +77,36 @@ class DefaultCharge extends Command
 
                     $response = curl_exec($ch);
                     curl_close ($ch);
-                }   elseif($loan_installments->amount < $net_installment_month * $loan->perInstallmentAmount) {
-                    $saving = SavingAcount::where('user_id', $user->id)->latest()->first();
-                    $saving->total = $saving->total - 20;
-                    $saving->save();
-
-                    $username = "Alauddin101";
-                    $hash = "4f9ec55ab0531a44a466910119d97847";
-                    $numbers = $user->mobile_number; //Recipient Phone Number multiple number must be separated by comma
-                    $message = '20tk has been deducted for less amount then per installment amount of Loan from saving. Thank you! Your current saving is '.$saving->total;
-
-                    $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
-
-                    $ch = curl_init();
-                    curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
-                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-                    $response = curl_exec($ch);
-                    curl_close ($ch);
                 }   else {
-                    return 0;
+                    $to = \Carbon\Carbon::parse($loan->approved_date)->floorMonth();
+                    $from = \Carbon\Carbon::parse($loan_installments->this_month)->floorMonth();
+                    $net_installment_month = $to->diffInMonths($from);
+
+                    if($loan_installments->amount < $net_installment_month * $loan->perInstallmentAmount) {
+                        $saving = SavingAcount::where('user_id', $user->id)->latest()->first();
+                        $saving->total = $saving->total - 20;
+                        $saving->save();
+
+                        $username = "Alauddin101";
+                        $hash = "4f9ec55ab0531a44a466910119d97847";
+                        $numbers = $user->mobile_number; //Recipient Phone Number multiple number must be separated by comma
+                        $message = '20tk has been deducted for less amount then per installment amount of Loan from saving. Thank you! Your current saving is '.$saving->total;
+
+                        $params = array('app'=>'ws', 'u'=>$username, 'h'=>$hash, 'op'=>'pv', 'unicode'=>'1','to'=>$numbers, 'msg'=>$message);
+
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?".http_build_query($params, "", "&"));
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+                        $response = curl_exec($ch);
+                        curl_close ($ch);
+
+                        return 0;
+                    }   else {
+                        return 0;
+                    }
                 }
             }   elseif($user->hasEmployeeLoans() == $user_id) {
 
