@@ -431,16 +431,17 @@ class AdminController extends Controller
                 $accounts->fee = $loan->fee;
                 $accounts->user_id = $loan->user_id;
 
-                $row = count(Accounts::select('fee')->where('user_id', $request->id)->get());
+                $row = count(Accounts::where('user_id', $request->id)->get());
                 if($row == 0) {
                     $accounts->total_fee = $loan->fee;
+                    $accounts->total = $accounts->total_fee;
                 }   else {
-                    $prev_fees = Accounts::select('total_fees')->where('user_id', $request->id)->latest()->first();
+                    $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
                     $accounts->total_fee = $request->fee + $prev_amount->total_fees;
+                    $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
                 }
 
                 $accounts->save();
-
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
             }   else {
@@ -462,16 +463,17 @@ class AdminController extends Controller
             $accounts->fee = $loan->fee;
             $accounts->user_id = $loan->user_id;
 
-            $row = count(Accounts::select('fee')->where('user_id', $request->id)->get());
+            $row = count(Accounts::where('user_id', $request->id)->get());
             if($row == 0) {
                 $accounts->total_fee = $loan->fee;
+                $accounts->total = $accounts->total_fee;
             }   else {
-                $prev_fees = Accounts::select('total_fees')->where('user_id', $request->id)->latest()->first();
+                $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
                 $accounts->total_fee = $request->fee + $prev_amount->total_fees;
+                $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
             }
 
             $accounts->save();
-
 
             return redirect('/admin/loans')->with('status', 'loan accepted');
         }

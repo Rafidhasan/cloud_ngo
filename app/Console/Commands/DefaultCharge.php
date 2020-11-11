@@ -62,6 +62,23 @@ class DefaultCharge extends Command
                     $saving->total = $saving->total - 20;
                     $saving->save();
 
+                    // Default charge goes to accounts
+                    $accounts = new Accounts();
+                    $accounts->default_charge = 20;
+                    $accounts->user_id = $user->id;
+
+                    $row = count(Accounts::select('default_charge')->where('user_id', $user->id)->get());
+                    if($row == 0) {
+                        $accounts->total_default_charge = 20;
+                        $accounts->total = 20;
+                    }   else {
+                        $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
+                        $accounts->total_default_charge = 20 + $prev_amount->total_default_charge;
+                        $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
+                    }
+
+                    $accounts->save();
+
                     $username = "Alauddin101";
                     $hash = "4f9ec55ab0531a44a466910119d97847";
                     $numbers = $user->mobile_number; //Recipient Phone Number multiple number must be separated by comma
@@ -95,9 +112,11 @@ class DefaultCharge extends Command
                         $row = count(Accounts::select('default_charge')->where('user_id', $user->id)->get());
                         if($row == 0) {
                             $accounts->total_default_charge = 20;
+                            $accounts->total = 20;
                         }   else {
-                            $prev_fees = Accounts::select('total_default_charge')->where('user_id', $user->id)->latest()->first();
+                            $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
                             $accounts->total_default_charge = 20 + $prev_amount->total_default_charge;
+                            $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
                         }
 
                         $accounts->save();

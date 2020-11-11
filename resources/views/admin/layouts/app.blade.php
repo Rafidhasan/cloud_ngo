@@ -51,6 +51,12 @@
                       </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/admin/withdraw">
+                        <span data-feather="file"></span>
+                          Withdraw
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/admin/showUsers">
                           <span data-feather="users"></span>
                           Users

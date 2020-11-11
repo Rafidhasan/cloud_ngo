@@ -75,8 +75,8 @@ Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middle
 Route::get('/admin', 'AdminController@index')->middleware('admin');
 
 //withdraw form routes
-Route::get('/admin/withdraw', 'AdminController@showWithdraw');
-Route::get('/admin/withdraws/approve/{id}/{serial}', 'AdminController@approveWithdraws');
+Route::get('/admin/withdraw', 'AdminwithdrawController@index')->middleware('admin');
+Route::post('/admin/withdraw/create/{id}', 'AdminwithdrawController@store');
 Route::get('/admin/withdraws/reject/{id}/{serial}', 'AdminController@rejectWithdraws');
 
 Route::get('/', 'UserRecordController@index');

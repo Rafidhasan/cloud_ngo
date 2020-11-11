@@ -22,6 +22,7 @@ class CreateAccountsTable extends Migration
             $table->integer('total_service_charge')->nullable();
             $table->integer('total_default_charge')->nullable();
             $table->integer('total_fee')->nullable();
+            $table->integer('total')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

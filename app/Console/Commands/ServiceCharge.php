@@ -74,9 +74,11 @@ class ServiceCharge extends Command
                 $row = count(Accounts::select('service_charge')->where('user_id', $user->id)->get());
                 if($row == 0) {
                     $accounts->total_service_charge = 20;
+                    $accounts->total = 20;
                 }   else {
-                    $prev_fees = Accounts::select('total_service_charge')->where('user_id', $user->id)->latest()->first();
+                    $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
                     $accounts->total_service_charge = 20 + $prev_amount->total_service_charge;
+                    $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
                 }
 
                 $accounts->save();

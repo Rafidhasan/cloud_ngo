@@ -19,7 +19,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Mobile Number</h5>
-                            <h1 class="card-text">{{ $user->mobile_number }}</h1>
+                            <h1 class="card-text">{{ Auth::user()->mobile_number }}</h1>
                         </div>
                     </div>
                 </div>
