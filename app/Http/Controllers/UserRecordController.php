@@ -181,7 +181,7 @@ class UserRecordController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            if($user->approved == 1) {
+            if($user->approved == 0) {
                 return redirect('/');
             }   else {
                 return redirect('/login')->with('status', 'wait for authority to approve');
