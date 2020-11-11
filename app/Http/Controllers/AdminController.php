@@ -667,4 +667,16 @@ class AdminController extends Controller
 
         return redirect('/admin')->with('status', "Approved and Notification send");
     }
+
+    //acconts controller
+    public function accountsIndex() {
+        $users = DB::table('users')
+            ->join('accounts', 'users.id', '=', 'accounts.user_id')
+            ->orderBy('accounts.created_at', 'DESC')
+            ->get();
+
+            return view('admin.accounts', [
+                'users' => $users
+            ]);
+    }
 }

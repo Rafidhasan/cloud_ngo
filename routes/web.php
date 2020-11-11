@@ -65,6 +65,10 @@ Route::get('/admin/loanInstallment/apporve/{tracking_number}/{token}', 'LoanInst
 //admin Approved Loans routes
 Route::get('/admin/approvedLoans', 'AdminController@approvedLoans')->middleware('admin');
 
+//admin Accounts routes
+Route::get('/admin/accounts', 'AdminController@accountsIndex')->middleware('admin');
+
+
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');
 
