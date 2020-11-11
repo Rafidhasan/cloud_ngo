@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Company Funds</h5>
-
+                            <h1 class="card-text">{{ $total }}</h1>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total Defaul Charge</h5>
-
+                            <h1 class="card_text">
+                                @if ($total_default_charge == "")
+                                    0
+                                @else
+                                    {{ $total_default_charge }}
+                                @endif
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -37,7 +43,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total Service Charge</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <h1 class="card_text">
+                                @if ($total_service_charge == "")
+                                    0
+                                @else
+                                    {{ $total_service_charge }}
+                                @endif
+                            </h1>
                         </div>
                     </div>
                 </div>

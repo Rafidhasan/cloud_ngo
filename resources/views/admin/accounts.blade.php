@@ -6,7 +6,7 @@
 
             {{-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas> --}}
 
-            <h2>Loans for Approval</h2><br><br>
+            <h2>Accounts</h2><br><br>
             <div class="table-responsive">
               <table class="table table-striped table-sm">
                 <thead>
@@ -20,11 +20,15 @@
                     <th>Total Service Charge</th>
                     <th>Total Default Charge</th>
                     <th>Total Loan Processing Fee</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                 @foreach ($users as $key => $user)
-                <tr>
+                @foreach ($users as $key => $user)
+                  @if ($user == "")
+                  <tr>None</tr>
+                  @else
+                  <tr>
                     <td>{{ $key+1 }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->mobile_number }}</td>
@@ -34,8 +38,11 @@
                     <td>{{ $user->total_service_charge }}</td>
                     <td>{{ $user->total_default_charge }}</td>
                     <td>{{ $user->total_fee }}</td>
-                </tr>
-                 @endforeach
+                    <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
+                  </tr>
+                  @endif
+                @endforeach
+                <tr><strong style="font-size: 2em">Grand Total: <span style="color: dodgerblue">{{ $total }} TK</span></strong></tr><br>
                 </tbody>
               </table>
             </div>

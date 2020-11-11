@@ -61,11 +61,26 @@ class AdminController extends Controller
 
         $total_loans = count($loans);
 
+        $users = DB::table('accounts')->get();
+
+        $total = 0;
+        $total_default_charge = 0;
+        $total_service_charge = 0;
+
+        foreach($users as $user) {
+            $total += $user->total_fee + $user->total_service_charge + $user->total_default_charge;
+            $total_default_charge += $user->total_default_charge;
+            $total_service_charge += $user->total_service_charge;
+        }
+
         return view('admin.dashboard.index', [
             'user' => $user,
             'saving' => $saving,
             'total_user' => $total_user,
-            'total_loans' => $total_loans
+            'total_loans' => $total_loans,
+            'total' => $total,
+            'total_default_charge' => $total_default_charge,
+            'total_service_charge' => $total_service_charge
         ]);
     }
 
@@ -675,8 +690,15 @@ class AdminController extends Controller
             ->orderBy('accounts.created_at', 'DESC')
             ->get();
 
-            return view('admin.accounts', [
-                'users' => $users
-            ]);
+        $total = 0;
+
+        foreach($users as $user) {
+            $total += $user->total_fee + $user->total_service_charge + $user->total_default_charge;
+        }
+
+        return view('admin.accounts', [
+            'users' => $users,
+            'total' => $total
+        ]);
     }
 }
