@@ -10,6 +10,8 @@ use App\BusinessLoan;
 
 use App\Garantor;
 
+use App\Accounts;
+
 use App\EmployeeLoan;
 
 use App\EduLoan;
@@ -82,7 +84,7 @@ class LoanController extends Controller
                             $garantor->g_mobile_number = $g_number;
                             $garantor->save();
                         }
-                        return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
+                        return redirect('/')->with('status', 'Wait for Garantor and Admin to approve. Your Loan Processing fee '. $fee .'TK is succesfully deducted from your savings');
                     }
                 }
             }

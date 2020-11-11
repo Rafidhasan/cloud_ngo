@@ -16,7 +16,12 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('total_service_charge');
+            $table->integer('service_charge')->nullable();
+            $table->integer('default_charge')->nullable();
+            $table->integer('fee')->nullable();
+            $table->integer('total_service_charge')->nullable();
+            $table->integer('total_default_charge')->nullable();
+            $table->integer('total_fee')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

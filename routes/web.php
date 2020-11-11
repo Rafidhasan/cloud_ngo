@@ -68,6 +68,8 @@ Route::get('/admin/approvedLoans', 'AdminController@approvedLoans')->middleware(
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');
 
+Route::get('/admin', 'AdminController@index')->middleware('admin');
+
 //withdraw form routes
 Route::get('/admin/withdraw', 'AdminController@showWithdraw');
 Route::get('/admin/withdraws/approve/{id}/{serial}', 'AdminController@approveWithdraws');

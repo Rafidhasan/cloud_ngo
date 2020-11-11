@@ -411,6 +411,20 @@ class AdminController extends Controller
                 $loan->approved_date = now();
                 $loan->save();
 
+                // loan processing fee goes to accounts
+                $accounts = new Accounts();
+                $accounts->fee = $loan->fee;
+                $accounts->user_id = $loan->user_id;
+
+                $row = count(Accounts::select('fee')->where('user_id', $request->id)->get());
+                if($row == 0) {
+                    $accounts->total_fee = $loan->fee;
+                }   else {
+                    $prev_fees = Accounts::select('total_fees')->where('user_id', $request->id)->latest()->first();
+                    $accounts->total_fee = $request->fee + $prev_amount->total_fees;
+                }
+
+                $accounts->save();
 
 
                 return redirect('/admin/loans')->with('status', 'loan accepted');
@@ -427,6 +441,22 @@ class AdminController extends Controller
             $loan->save();
 
             $savings->save();
+
+            // loan processing fee goes to accounts
+            $accounts = new Accounts();
+            $accounts->fee = $loan->fee;
+            $accounts->user_id = $loan->user_id;
+
+            $row = count(Accounts::select('fee')->where('user_id', $request->id)->get());
+            if($row == 0) {
+                $accounts->total_fee = $loan->fee;
+            }   else {
+                $prev_fees = Accounts::select('total_fees')->where('user_id', $request->id)->latest()->first();
+                $accounts->total_fee = $request->fee + $prev_amount->total_fees;
+            }
+
+            $accounts->save();
+
 
             return redirect('/admin/loans')->with('status', 'loan accepted');
         }

@@ -66,10 +66,20 @@ class ServiceCharge extends Command
 
                 $total += 20;
 
+                // Service charge goes to accounts
                 $accounts = new Accounts();
-                $user_id = $user->id;
-                $accounts->user_id = $user_id;
-                $accounts->total_service_charge = $total;
+                $accounts->service_charge = 20;
+                $accounts->user_id = $user->id;
+
+                $row = count(Accounts::select('service_charge')->where('user_id', $user->id)->get());
+                if($row == 0) {
+                    $accounts->total_service_charge = 20;
+                }   else {
+                    $prev_fees = Accounts::select('total_service_charge')->where('user_id', $user->id)->latest()->first();
+                    $accounts->total_service_charge = 20 + $prev_amount->total_service_charge;
+                }
+
+                $accounts->save();
 
                 $username = "Alauddin101";
                 $hash = "4f9ec55ab0531a44a466910119d97847";
