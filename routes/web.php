@@ -57,6 +57,18 @@ Route::get('/admin/rejectEmployeeLoan/loan/{id}/{token}', 'AdminController@appro
 Route::get('/admin/approveEduLoan/loan/{id}/{token}','AdminController@approveEduLoan')->middleware('admin');
 Route::get('/admin/rejectEduLoan/loan/{id}/{token}','AdminController@rejectEduLoan')->middleware('admin');
 
+Route::get('/admin/singleShowBusinessLoanEdit/{id}/{token}', 'AdminController@editBusinessLoan')->middleware('admin');
+Route::get('/admin/singleShowEmployeeLoanEdit/{id}/{token}', 'AdminController@editEmployeeLoan')->middleware('admin');
+Route::get('/admin/singleShowEducationLoanEdit/{id}/{token}', 'AdminController@editEducationLoan')->middleware('admin');
+
+Route::put('/admin/BusinessLoan/update/{id}/{token}', 'AdminController@storeBusinessLoan')->middleware('admin');
+Route::put('/admin/EmployeeLoan/update/{id}/{token}', 'AdminController@storeEmployeeLoan')->middleware('admin');
+Route::put('/admin/EducationLoan/update/{id}/{token}', 'AdminController@storeEducationLoan')->middleware('admin');
+
+Route::get('/admin/singleShowBusinessLoanDelete/{id}/{token}', 'AdminController@deletebusinessLoan')->middleware('admin');
+Route::get('/admin/singleShowEmployeeLoanDelete/{id}/{token}', 'AdminController@deleteEmployeeLoan')->middleware('admin');
+Route::get('/admin/singleShowEducationLoanDelete/{id}/{token}', 'AdminController@deleteEducationLoan')->middleware('admin');
+
 Route::get('/admin/showGProfile/{number}', 'AdminController@showGProfile')->middleware('admin');
 
 //admin loan installments routes

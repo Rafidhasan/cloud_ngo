@@ -42,8 +42,24 @@
                     <td>{{ $user->installments }}</td>
                     <td>{{ $user->perInstallmentAmount }}</td>
                     <td>{{ $user->fee }}</td>
-                    <td><a href="/admin/singleShowLoanEdit/{{ $user->user_id }}/{{ $user->token }}">Edit</a></td>
-                    <td>Delete</td>
+                    <td>
+                        @if (isset($user->business_name))
+                            <a class="btn btn-primary btn-sm" href="/admin/singleShowBusinessLoanEdit/{{ $user->user_id }}/{{ $user->token }}">Edit</a>
+                        @elseif (isset($user->office_no))
+                            <a class="btn btn-primary btn-sm" href="/admin/singleShowEmployeeLoanEdit/{{ $user->user_id }}/{{ $user->token }}">Edit</a>
+                        @else
+                            <a class="btn btn-primary btn-sm" href="/admin/singleShowEducationLoanEdit/{{ $user->user_id }}/{{ $user->token }}">Edit</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if (isset($user->business_name))
+                            <a class="btn btn-danger btn-sm" href="/admin/singleShowBusinessLoanDelete/{{ $user->user_id }}/{{ $user->token }}">Delete</a>
+                        @elseif (isset($user->office_no))
+                            <a class="btn btn-danger btn-sm" href="/admin/singleShowEmployeeLoanDelete/{{ $user->user_id }}/{{ $user->token }}">Delete</a>
+                        @else
+                            <a class="btn btn-danger btn-sm" href="/admin/singleShowEducationLoanDelete/{{ $user->user_id }}/{{ $user->token }}">Delete</a>
+                        @endif
+                    </td>
                 </tr>
                  @endforeach
                 </tbody>

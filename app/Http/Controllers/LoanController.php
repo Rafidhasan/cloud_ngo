@@ -129,7 +129,7 @@ class LoanController extends Controller
                 }
                 return redirect('/')->with('status', 'Wrong Gaurantor Info');
             }   else {
-                return redirect('/')->with('status', 'Wrong garantor information');
+                return redirect('/')->with('status', 'You have no saving');
             }
         }
     }

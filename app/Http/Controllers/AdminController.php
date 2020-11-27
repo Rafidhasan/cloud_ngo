@@ -495,7 +495,7 @@ class AdminController extends Controller
                     $accounts->total = $accounts->total_fee;
                 }   else {
                     $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
-                    $accounts->total_fee = $request->fee + $prev_amount->total_fees;
+                    $accounts->total_fee = $request->fee + $prev_fees->total_fees;
                     $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
                 }
 
@@ -771,5 +771,78 @@ class AdminController extends Controller
         return view('admin.withdraw.prevWithdraws', [
             'users'=>$users
         ]);
+    }
+
+    //Edit Loans
+    public function editBusinessLoan(Request $request) {
+        $user = BusinessLoan::where('user_id', $request->id)->where('token', $request->token)->latest()->first();
+        return view('admin.dashboard.showLoanEditForm', [
+            'user' => $user
+        ]);
+    }
+    public function editEducationLoan(Request $request) {
+        $user = EmployeeLoan::where('user_id', $request->id)->where('token', $request->token)->latest()->first();
+        return view('admin.dashboard.showEmployeeLoanEditForm', [
+            'user' => $user
+        ]);
+    }
+    public function editEmployeeLoan(Request $request) {
+        dd($request->id);
+        $user = EducationLoan::where('user_id', $request->id)->where('token', $request->token)->latest()->first();
+        return view('admin.dashboard.showEducationLoanEditForm', [
+            'user' => $user
+        ]);
+    }
+
+    // store loans
+    public function storeBusinessLoan(Request $request) {
+        $user = BusinessLoan::where('user_id', $request->id)->where('token', $request->token)->latest()->first();
+
+        $feeDif = ($request->amount * 2/100) - $user->fee;
+
+        $user->amount = $request->amount;
+        $user->installments = $request->installments;
+        $user->perInstallmentAmount = $request->amount/$request->installments;
+        $user->fee = $request->amount * 2/100;
+
+        $accounts = new Accounts();
+        $accounts->fee = $feeDif;
+        $accounts->user_id = $request->id;
+
+        $row = count(Accounts::where('user_id', $request->id)->get());
+        if($row == 0) {
+            $accounts->total_fee = $feeDif;
+            $accounts->total = $accounts->total_fee;
+            $accounts->save();
+        }   else {
+            $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
+            $accounts->total_fee = $request->fee + $prev_fees->total_fees;
+            dd('ami ekhane');
+            $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
+            $accounts->save();
+        }
+
+        $user->update();
+
+        return redirect('/admin')->with('status', 'Loan has been updated');
+    }
+
+    //Delete Loans
+    public function deleteBusinessLoan(Request $request) {
+        DB::table('business_loans')->where('id', '=', $request->id)->where('token', $request->token)->delete();
+
+        return redirect('/admin')->with('status', "Loan is deleted");
+    }
+
+    public function deleteEmployeeLoan(Request $request) {
+        DB::table('employee_loans')->where('id', '=', $request->id)->where('token', $request->token)->delete();
+
+        return redirect('/admin')->with('status', "Loan is deleted");
+    }
+
+    public function deleteEducationLoan(Request $request) {
+        DB::table('education_loans')->where('id', '=', $request->id)->where('token', $request->token)->delete();
+
+        return redirect('/admin')->with('status', "Loan is deleted");
     }
 }
