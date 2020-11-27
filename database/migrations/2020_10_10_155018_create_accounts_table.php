@@ -23,11 +23,14 @@ class CreateAccountsTable extends Migration
             $table->integer('total_default_charge')->nullable();
             $table->integer('total_fee')->nullable();
             $table->integer('total')->nullable();
+            $table->integer('withdraw_amount')->nullable();
+            $table->integer('grand_total')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

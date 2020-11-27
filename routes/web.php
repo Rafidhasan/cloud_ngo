@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin', 'AdminController@index')->middleware('admin');
 Route::get('/admin/registerUsers', 'AdminController@show')->middleware('admin');
 Route::get('/admin/showUsers', 'AdminController@showUsers')->middleware('admin');
+Route::get('/admin/showSingleUserEditForm/{id}', 'AdminController@showSingleUserEditForm')->middleware('admin');
 Route::get('/userInfo/{id}','AdminController@showSingleUser')->middleware('admin');
-
+Route::put('/admin/user/update/{id}', 'AdminController@updateSingleUser')->middleware('admin');
+Route::get('/admin/deleteUser/{id}', 'AdminController@deleteUser')->middleware('admin');
 Route::get('/admin/accounts', 'AdminController@accounts')->middleware('admin');
 
 //admin forget pass section
@@ -68,20 +70,37 @@ Route::get('/admin/approvedLoans', 'AdminController@approvedLoans')->middleware(
 //admin Accounts routes
 Route::get('/admin/accounts', 'AdminController@accountsIndex')->middleware('admin');
 
+//admin user withdraw approval
+Route::get('/admin/userWithdraw', 'withdrawController@adminApproved')->middleware('admin');
+Route::get('/admin/admin/user/withdraw/approve/{id}', 'WithdrawController@accpt');
+Route::get('/admin/admin/user/withdraw/reject/{id}', 'WithdrawController@rjct');
 
 //service charge routes
 Route::get('/admin/service_charge', 'AdminController@showServiceCharge')->middleware('admin');
-
-Route::get('/admin', 'AdminController@index')->middleware('admin');
 
 //withdraw form routes
 Route::get('/admin/withdraw', 'AdminwithdrawController@index')->middleware('admin');
 Route::post('/admin/withdraw/create/{id}', 'AdminwithdrawController@store');
 Route::get('/admin/withdraws/reject/{id}/{serial}', 'AdminController@rejectWithdraws');
+Route::get('/admin/prev-withdraws', 'AdminController@prevWithdraws')->middleware('admin');
+Route::get('/admin', 'AdminController@index')->middleware('admin');
 
+
+//User Routes
 Route::get('/', 'UserRecordController@index');
+Route::get('/savingsForm', 'UserRecordController@showSavingsForm');
 
-Auth::routes();
+//user accounts routes
+Route::get('/user/accounts', 'userRecordController@accounts');
+
+//user garantor list
+Route::get('/garantor_list', 'userRecordController@garantorList');
+
+// user show saving
+Route::get('/user/savings', 'UserRecordController@showSavings');
+
+//withdraw
+Route::get('/withdraws', 'WithdrawController@showUserForm');
 
 // user authetication routes
 Route::get('/register', 'UserRecordController@create');
@@ -109,6 +128,10 @@ Route::get('/dashboard', 'userDashboard@index');
 Route::get('/approveLoans', 'userDashboard@approvedLoans');
 
 //loan Routes
+Route::get('/loans', function() {
+    return view('user.loan');
+});
+
 Route::get('/business_loan','LoanController@businessLoanIndex');
 Route::post('/business_loan/{id}','LoanController@businessLoanCreate');
 

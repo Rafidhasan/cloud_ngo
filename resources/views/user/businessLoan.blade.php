@@ -62,11 +62,11 @@
                         <span class="addRowCol">
                             <div class="row">
                                 <div class="col-md-11">
-                                    <input type="text" name="g_name[]" placeholder="Gaurantor name" required autofocus>
+                                    <input type="text" name="g_name[]" placeholder="Gaurantor name" autofocus>
                                     @error('g_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    <input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" required autofocus>
+                                    <input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" autofocus>
                                     @error('g_account_no')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -90,7 +90,7 @@
                                             ' @error('g_name')'+
                                             '<span class="text-danger">{{ $message }}</span>'+
                                             '@enderror'+
-                                            '<input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" required autofocus>'+
+                                            '<input type="text" name="g_account_no[]" placeholder="Gaurantor Account Number" autofocus>'+
                                             '@error('g_account_no')'+
                                             '<span class="text-danger">{{ $message }}</span>'+
                                             '@enderror'+

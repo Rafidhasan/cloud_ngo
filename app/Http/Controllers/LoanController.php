@@ -38,26 +38,24 @@ class LoanController extends Controller
             'exp' => 'required',
             'capital' => 'required',
             'fee' => 'nullable',
-            'g_name' => 'required',
-            'g_account_no' => 'required',
+            'g_name' => 'nullable',
+            'g_account_no' => 'nullable',
             'g_approved' => 'nullable'
         ]);
 
 
         $garantor_numbers = $request->g_account_no;
 
-        $loan = new BusinessLoan();
+        if($request->g_account_no[0] == null) {
+            $loan = new BusinessLoan();
 
-        $user = Auth::user();
-        $fee = $request->amount * 2/100;
-        $users = User::get();
+            $user = Auth::user();
+            $fee = $request->amount * 2/100;
+            $users = User::get();
 
-        if($user->savingAmount() > $fee) {
-            foreach ($users as $user) {
-                foreach($garantor_numbers as $garantor_number) {
-                    if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $user->installments < 11) {
-                        $g_account = $user->mobile_number;
-                        $g_name = $user->name;
+            if($user->savingAmount() > $fee && $user->savingAmount() * 20 >= $request->amount) {
+                foreach ($users as $user) {
+                    if($request->installments < 11) {
                         $loan->user_id = $request->id;
                         $loan->business_name = $request->name;
                         $loan->business_Address = $request->address;
@@ -73,24 +71,66 @@ class LoanController extends Controller
 
                         $loan->save();
 
-                        $g_infos = array_combine($request->g_name, $request->g_account_no);
+                        $garantor = new Garantor();
+                        $garantor->loan_id = $loan->id;
+                        $garantor->Loan_method = 'business_loan';
 
-                        foreach($g_infos as $g_name => $g_number) {
-                            $garantor = new Garantor();
-                            $garantor->loan_id = $loan->id;
-                            $garantor->Loan_method = 'business_loan';
+                        $garantor->save();
 
-                            $garantor->g_name = $g_name;
-                            $garantor->g_mobile_number = $g_number;
-                            $garantor->save();
-                        }
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve. Your Loan Processing fee '. $fee .'TK is succesfully deducted from your savings');
                     }
                 }
+                return redirect('/')->with('status', 'Wrong Gaurantor Info');
+            }   else {
+                return redirect('/')->with('status', 'Wrong garantor information');
             }
-            return redirect('/')->with('status', 'Wrong Gaurantor Info');
         }   else {
-            return redirect('/')->with('status', 'You must have savings for loan');
+            $loan = new BusinessLoan();
+
+            $user = Auth::user();
+            $fee = $request->amount * 2/100;
+            $users = User::get();
+
+            if($user->savingAmount() > $fee && $user->savingAmount() * 20 >= $request->amount) {
+                foreach ($users as $user) {
+                    foreach($garantor_numbers as $garantor_number) {
+                        if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $request->installments < 11) {
+                            $g_account = $user->mobile_number;
+                            $g_name = $user->name;
+                            $loan->user_id = $request->id;
+                            $loan->business_name = $request->name;
+                            $loan->business_Address = $request->address;
+                            $loan->business_type = $request->category;
+                            $loan->contact_business = $request->contact_no;
+                            $loan->exp_business = $request->exp;
+                            $loan->amount = $request->amount;
+                            $loan->installments = $request->installments;
+                            $loan->capital = $request->capital;
+                            $loan->fee = $fee;
+                            $loan->token = Str::random(5);
+                            $loan->perInstallmentAmount = (int)$request->amount / (int)$request->installments;
+
+                            $loan->save();
+
+                            $g_infos = array_combine($request->g_name, $request->g_account_no);
+
+                            foreach($g_infos as $g_name => $g_number) {
+                                $garantor = new Garantor();
+                                $garantor->loan_id = $loan->id;
+                                $garantor->Loan_method = 'business_loan';
+
+                                $garantor->g_name = $g_name;
+                                $garantor->g_mobile_number = $g_number;
+                                $garantor->save();
+                            }
+                            return redirect('/')->with('status', 'Wait for Garantor and Admin to approve. Your Loan Processing fee '. $fee .'TK is succesfully deducted from your savings');
+                        }
+                    }
+                }
+                return redirect('/')->with('status', 'Wrong Gaurantor Info');
+            }   else {
+                return redirect('/')->with('status', 'Wrong garantor information');
+            }
         }
     }
 
@@ -119,7 +159,7 @@ class LoanController extends Controller
         $fee = $request->amount * 2/100;
         $users = User::get();
 
-        if($user->savingAmount() > $fee) {
+        if($user->savingAmount() > $fee && $user->savingAmount() * 20 <= $request->amount) {
             foreach ($users as $user) {
                 foreach($garantor_numbers as $garantor_number) {
                     if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $user->installments < 11) {
@@ -181,7 +221,7 @@ class LoanController extends Controller
         $fee = $request->amount * 2/100;
         $users = User::get();
 
-        if($user->savingAmount() > $fee) {
+        if($user->savingAmount() > $fee && $user->savingAmount() * 20 <= $request->amount) {
             foreach ($users as $user) {
                 foreach($garantor_numbers as $garantor_number) {
                     if($user->mobile_number == $garantor_number && Auth::user()->mobile_number != $garantor_number && $user->installments < 11) {

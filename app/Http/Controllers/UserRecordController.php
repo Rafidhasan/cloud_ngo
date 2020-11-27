@@ -11,7 +11,7 @@ use Auth;
 use App\ServiceCharge;
 
 use App\ForgetUser;
-
+use App\SavingAcount;
 use App\UserNotification;
 
 use DB;
@@ -47,7 +47,7 @@ class UserRecordController extends Controller
             'NID_or_birth_certificate_number' => 'required',
          ]);
 
-         $user = User::where('mobile_number',$request->mobile_number)->first();
+         $user = "";
 
          if($user == '') {
             if($request->refer_account_number == null) {
@@ -64,12 +64,12 @@ class UserRecordController extends Controller
                 $user->date_of_birth =  $request->date_of_birth;
                 $user->address = $request->input('address');
                 $user->thana = $request->input('thana');
-                $user->nominee_name = $request->input('nominee_name');
-                $user->nominee_address = $request->input('nominee_address');
+                $user->nominee_name = $request->nominee_name;
+                $user->nominee_address = $request->nominee_address;
                 $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
                 $user->password = \Hash::make($token);
                 $user->refer_account_number = $request->refer_account_number;
-
+                $user->nominee_nid = null;
 
                 if($request->hasFile('image')) {
                     $user_file = $request->file('image');
@@ -93,16 +93,6 @@ class UserRecordController extends Controller
                     return redirect('/')->with('status', 'Must have Image');
                 }
 
-                // if($request->hasFile('nominee_nid')) {
-                //     $nid_file = $request->file('nominee_nid');
-                //     $extension = $nid_file->getClientOriginalExtension();
-                //     $fileName = time() . '.' .$extension;
-                //     $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
-                //     $user->nominee_nid = $fileName;
-                // }   else {
-                //     return $request;
-                //     $user->nominee_nid = ' ';
-                // }
                 $user->save();
 
                 $notification = new UserNotification();
@@ -160,9 +150,64 @@ class UserRecordController extends Controller
 
                 return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
              }
-         }  else if($user->mobile_number == $request->mobile_number) {
+         }  else if($request->refer_account_number != null) {
+            $user = User::where('mobile_number',$request->refer_account_number)->first();
 
-            return redirect('/')->with('status', 'Same Informtation');
+            if($user != '') {
+                $user = User::select('mobile_number')->get();
+                $user = new User();
+                $digits = 5;
+                $date = $request->date_of_birth;
+                $token = rand(pow(10, $digits-1), pow(10, $digits)-1);
+
+                $user->name = $request->input('name');
+                $user->mobile_number = $request->input('mobile_number');
+                $user->fathers_name = $request->input('fathers_name');
+                $user->mothers_name = $request->input('mothers_name');
+                $user->date_of_birth =  $request->date_of_birth;
+                $user->address = $request->input('address');
+                $user->thana = $request->input('thana');
+                $user->nominee_name = $request->input('nominee_name');
+                $user->nominee_address = $request->input('nominee_address');
+                $user->NID_or_birth_certificate_number = $request->input('NID_or_birth_certificate_number');
+                $user->password = \Hash::make($token);
+                $user->refer_account_number = $request->refer_account_number;
+
+
+                if($request->hasFile('image')) {
+                    $user_file = $request->file('image');
+                    $extension = $user_file->getClientOriginalExtension();
+                    $fileName = time() . '.' .$extension;
+                    $user_file->move('storage/profile-image', $fileName);
+                    $user->image = $fileName;
+                }   else {
+                    $user->image = ' ';
+                    return redirect('/')->with('status', 'Must have Image');
+                }
+
+                if($request->hasFile('nid_image')) {
+                    $nid_file = $request->file('nid_image');
+                    $extension = $nid_file->getClientOriginalExtension();
+                    $fileName = time() . '.' .$extension;
+                    $nid_file->move('storage/nid_or_birth_certificate_image', $fileName);
+                    $user->nid_image = $fileName;
+                }   else {
+                    $user->nid_image = ' ';
+                    return redirect('/')->with('status', 'Must have Image');
+                }
+
+                $user->save();
+
+                $notification = new UserNotification();
+                $notification->user_id = $user->id;
+                $notification->status = 'Thank you for Registration. Your PIN is '.$token;
+
+                $notification->save();
+
+                return redirect('/')->with('status', 'Wait for Authity to validate. Your password is '.$token);
+            }   else {
+                return redirect('/')->with('status', 'Referesnce Account Number is not Correct');
+            }
          }  else {
             return redirect('/')->with('status', 'Incorrect Informtation');
          }
@@ -181,7 +226,7 @@ class UserRecordController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            if($user->approved == 0) {
+            if($user->approved == 1) {
                 return redirect('/');
             }   else {
                 return redirect('/login')->with('status', 'wait for authority to approve');
@@ -268,5 +313,60 @@ class UserRecordController extends Controller
         DB::table('user_notifications')->where('user_id', '=', $request->id)->delete();
 
         return redirect('/');
+    }
+
+    public function accounts() {
+        $users = DB::table('users')
+            ->join('accounts', 'users.id', '=', 'accounts.user_id')
+            ->join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
+            ->get();
+
+        return view('user.dashboard.accounts', [
+            'users' => $users
+        ]);
+    }
+
+    public function garantorList() {
+        $business_loans = DB::table('users')
+            ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
+            ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
+            ->get()
+            ->toArray();
+
+        $employee_loans = DB::table('users')
+            ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
+            ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
+            ->get()
+            ->toArray();
+
+        $edu_loans = DB::table('users')
+            ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
+            ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
+            ->get()
+            ->toArray();
+
+        $users = array_merge($business_loans, $employee_loans, $edu_loans);
+
+        return view('user.dashboard.garantorList', [
+            'users' => $users
+        ]);
+    }
+
+    public function showSavings() {
+        $users = SavingAcount::where('user_id', Auth::user()->id)
+            ->where('approved', 1)
+            ->get();
+
+        return view('user.dashboard.savings', [
+            'users' => $users
+        ]);
+    }
+
+    public function showSavingsForm() {
+        return view('user.savings');
+    }
+
+    public function loan() {
+        return view('user.laon');
     }
 }

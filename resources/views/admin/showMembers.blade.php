@@ -29,7 +29,7 @@
                                 <li><strong>NID/Birth Certificate Number: </strong>{{ $user->NID_or_birth_certificate_number }}</li>
                                 <li><strong>Reference Account Number: </strong>{{ $user->refer_account_number }}</li>
                                 <li><strong>Nominee Name: </strong>{{ $user->nominee_name }}</li>
-                                <li><strong>Nominee NID: </strong>{{ $user->nominee_nid }}</li>
+                                <li><strong>Nominee Adress: </strong>{{ $user->nominee_address }}</li>
                                 <li class="mt-5">
                                     <div class="row">
                                         <div class="col-md-6">

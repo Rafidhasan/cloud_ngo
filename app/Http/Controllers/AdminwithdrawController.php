@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use DB;
 
+use Auth;
+
+use App\savingAcount;
+
 use App\Accounts;
 use App\Adminwithdraw;
 
@@ -33,16 +37,20 @@ class AdminwithdrawController extends Controller
             $total += $user->total_fee + $user->total_service_charge + $user->total_default_charge;
         }
 
-        if($request->amount >= $total) {
+        if($request->amount <= $total) {
             $withdraw = new AdminWithdraw();
             $withdraw->user_id = Auth::user()->id;
             $withdraw->amount = $request->amount;
             $withdraw->details = $request->details;
             $withdraw->save();
 
-            return redirect('status', '');
-        }   else {
+            $saving = SavingAcount::where('user_id', Auth::user()->id)->latest()->first();
+            $saving->total = $saving->total - $request->amount;
+            $saving->save();
 
+            return redirect('admin')->with('status', 'Withdraw is completed');
+        }   else {
+            return redirect('admin')->with('status', 'Amount is more than withdraw amount');
         }
     }
 }

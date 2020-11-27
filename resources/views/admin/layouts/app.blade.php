@@ -51,12 +51,6 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/withdraw">
-                        <span data-feather="file"></span>
-                          Withdraw
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/admin/showUsers">
                           <span data-feather="users"></span>
                           Users
@@ -105,9 +99,9 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="/admin/withdraw">
+                        <a class="nav-link" href="/admin/userWithdraw">
                           <span data-feather="layers"></span>
-                          Approved Withdraws
+                          Approve User Withdraws
                         </a>
                       </li>
                       <li class="nav-item">
@@ -119,24 +113,19 @@
                   </ul>
 
                   <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Member Transactions</span>
+                    <span>Official transactions</span>
                     <a class="d-flex align-items-center text-muted" href="#">
                       <span data-feather="plus-circle"></span>
                     </a>
                   </h6>
                   <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                      <a class="nav-link" href="/admin/service_charge">
-                        <span data-feather="file-text"></span>
-                        Service Charge
-                      </a>
+                        <a class="nav-link" href="/admin/withdraw">
+                        <span data-feather="file"></span>
+                          Withdraw from Accounts
+                        </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span data-feather="file-text"></span>
-                        Last quarter
-                      </a>
-                    </li>
+
                     <li class="nav-item">
                       <a class="nav-link" href="#">
                         <span data-feather="file-text"></span>

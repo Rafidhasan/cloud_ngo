@@ -50,22 +50,12 @@
                     <li><a href="/login">Login</a>
                 @else
                     <li><a class="text-white" href="/profile/{{ Auth::user()->id }}" role="button">{{ Auth::user()->name }}'s Profile</a></li>
-                    <li class="text-white">
-                        <div class="dropdown mr-5">
-                            <button class="site-btn dropdown-toggle" style="padding: 10px 10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Loans
-                            </button>
-                            <div class="dropdown-menu" style="z-index: 999;" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" style="color: #262626" href="/business_loan">Business Loan</a>
-                              <a class="dropdown-item" style="color: #262626" href="/emp_loan">Employee Loan</a>
-                              <a class="dropdown-item" style="color: #262626" href="/edu_loan">Educational Loan</a>
-                            </div>
-                          </div>
+                    <li>
+                        <a class="text-white" href="/loans" role="button">Loans</a></li>
                     </li>
                     @if (Auth::user()->checkAdmin())
                         <li><a href="/admin" class="text-white">Admin</a></li>
                     @endif
-                    <li><a href="/withdraw" class="text-white">Withdraw</a></li>
                     <li><a class="text-white" href="/logout" role="submit">Logout</a></li>
                     <li><a class="text-white" href="/dashboard" class="text-white">Dashboard</a></li>
                 @endguest

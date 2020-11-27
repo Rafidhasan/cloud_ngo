@@ -19,7 +19,7 @@ use App\EduLoan;
 use App\UserNotification;
 
 use App\Accounts;
-
+use App\Adminwithdraw;
 use App\Withdraw;
 
 use App\ForgetPass;
@@ -46,14 +46,17 @@ class AdminController extends Controller
         $saving = SavingAcount::where('user_id', $user->id)->first();
 
         $edu_loans = DB::table('edu_loans')
+            ->where('approved', 0)
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('employee_loans')
+            ->where('approved', 0)
             ->get()
             ->toArray();
 
         $business_loans = DB::table('business_loans')
+            ->where('approved', 0)
             ->get()
             ->toArray();
 
@@ -62,6 +65,10 @@ class AdminController extends Controller
         $total_loans = count($loans);
 
         $users = DB::table('accounts')->get();
+
+        $member_register_application = count(User::where('approved', 0)->get());
+
+        $savings_application = count(SavingAcount::where('approved', 0)->get());
 
         $total = 0;
         $total_default_charge = 0;
@@ -80,7 +87,9 @@ class AdminController extends Controller
             'total_loans' => $total_loans,
             'total' => $total,
             'total_default_charge' => $total_default_charge,
-            'total_service_charge' => $total_service_charge
+            'total_service_charge' => $total_service_charge,
+            'member_register_application' => $member_register_application,
+            'savings_application' => $savings_application
         ]);
     }
 
@@ -95,13 +104,62 @@ class AdminController extends Controller
     }
 
     public function showUsers() {
-        $users = User::select('id', 'name', 'mobile_number', 'address', 'thana', 'NID_or_birth_certificate_number', 'nominee_name', 'nominee_nid')
-            ->where('users.approved', 1)
+        $users = User::where('users.approved', 1)
             ->get();
 
         return view('admin.showUsers', [
             'users' => $users
         ]);
+    }
+
+    public function updateSingleuser(Request $request) {
+        $id = $request->id;
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->mobile_number = $request->mobile_number;
+        $user->fathers_name = $request->fathers_name;
+        $user->mothers_name = $request->mothers_name;
+        $user->date_of_birth =  $request->date_of_birth;
+        $user->address = $request->address;
+        $user->thana = $request->thana;
+        $user->nominee_name = $request->nominee_name;
+        $user->nominee_address = $request->nominee_address;
+        $user->NID_or_birth_certificate_number = $request->NID_or_birth_certificate_number;
+        $user->refer_account_number = $request->refer_account_number;
+        $user->password = User::select('password')->where('id', $request->id)->first();
+
+        if($request->image == '') {
+            $image = User::select('image')->where('id', $request->id)->first();
+            $user->image = $image->image;
+        }   else {
+            $user->image = $request->image;
+        }
+
+        if($request->nid_image == '') {
+            $nid_image = User::select('nid_image')->where('id', $request->id)->first();
+            $user->nid_image = $nid_image->nid_image;
+        }   else {
+            $user->nid_image = $request->nid_image;
+        }
+
+        $user->save();
+        return redirect('/admin')->with('status', $request->name.'\'s Information has been updated');
+    }
+
+    public function showSingleUserEditForm(Request $request) {
+        $user = User::where('id', $request->id)->first();
+
+        return view('admin.dashboard.editUserForm', [
+            'user' => $user
+        ]);
+    }
+
+    public function deleteUser(Request $request) {
+        $user = User::where('id', $request->id)->first();
+        $user->delete();
+
+        return redirect('/admin')->with('status', 'user deleted');
     }
 
     public function savings() {
@@ -616,6 +674,7 @@ class AdminController extends Controller
         ]);
     }
 
+
     public function approvePass(Request $request) {
         $user = ForgetUser::where('user_id', $request->id)->first();
 
@@ -701,6 +760,16 @@ class AdminController extends Controller
         return view('admin.accounts', [
             'users' => $users,
             'total' => $total
+        ]);
+    }
+
+    public function prevWithdraws() {
+        $users = DB::table('users')
+            ->join('Adminwithdraws', 'users.id', '=', 'Adminwithdraws.user_id')
+            ->get();
+
+        return view('admin.withdraw.prevWithdraws', [
+            'users'=>$users
         ]);
     }
 }

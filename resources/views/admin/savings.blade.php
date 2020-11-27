@@ -35,8 +35,27 @@
                     <td>{{ $user->amount }}</td>
                     <td>{{ $user->total }}</td>
                     <td><a class="btn btn-primary btn-sm" href="/admin/savings/edit/{{ $user->tracking_number }}/{{ $user->user_id }}">Edit</a></td>
-                    <td><a class="btn btn-danger btn-sm" href="/admin/savings/delete/{{ $user->tracking_number }}">Delete</a></td>
+                    <td><a type="button"  data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-sm text-white">Delete</a></td>
                 </tr>
+                <div class="modal" id="exampleModal"  tabindex="-1">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Delete {{ $user->name }}'s Savings</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <a href="/admin/savings/delete/{{ $user->tracking_number }}" type="button" class="btn btn-danger">Reject</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                  @endforeach
                 </tbody>
               </table>

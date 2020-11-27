@@ -14,11 +14,11 @@
                                 @csrf
                                 <div class="form-group">
                                     <h5>Amount</h5>
-                                    <input type="text" class="form-control" name="mobile_number">
+                                    <input type="text" class="form-control" name="amount">
                                 </div>
                                 <div class="form-group">
                                     <h5>Details</h5>
-                                    <textarea type="text" class="form-control" name="method"></textarea>
+                                    <textarea type="text" class="form-control" name="details"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>

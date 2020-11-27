@@ -15,6 +15,7 @@ use DB;
 use App\Accounts;
 
 use App\ServiceChrg;
+use Illuminate\Support\Facades\Log;
 
 class ServiceCharge extends Command
 {
@@ -52,6 +53,8 @@ class ServiceCharge extends Command
         $users = User::get();
 
         foreach($users as $user) {
+            $user_id = $user->id;
+            Log::info(print_r($user_id, true));
             $total = 0;
             if($user->hasSavings() == $user->id) {
                 $service_charges = new ServiceChrg();
@@ -77,7 +80,7 @@ class ServiceCharge extends Command
                     $accounts->total = 20;
                 }   else {
                     $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
-                    $accounts->total_service_charge = 20 + $prev_amount->total_service_charge;
+                    $accounts->total_service_charge = 20 + $prev_fees->total_service_charge;
                     $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
                 }
 

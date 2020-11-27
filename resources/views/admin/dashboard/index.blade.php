@@ -80,18 +80,52 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Loan Applications</h5>
-                            <h1 class="card-text">
-                                @if ($total_loans == 0)
-                                    No Loan Applications
-                                @else
-                                    {{ $total_loans }}
-                                @endif
-                            </h1>
+                    <a href="/admin/loans" style="text-decoration: none;">
+                        <div class="card">
+                            <div class="card-body" style="color: #000">
+                                <h5 class="card-title">Total Loan Applications Due</h5>
+                                <h1 class="card-text">
+                                    @if ($total_loans == 0)
+                                        No Loan Applications
+                                    @else
+                                        {{ $total_loans }}
+                                    @endif
+                                </h1>
+                            </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/admin/registerUsers" style="text-decoration: none;">
+                        <div class="card">
+                            <div class="card-body" style="color: #000">
+                                <h5 class="card-title">Total Member Application Due</h5>
+                                <h1 class="card-text">
+                                    @if ($member_register_application == 0)
+                                        No Member Applications
+                                    @else
+                                        {{ $member_register_application }}
+                                    @endif
+                                </h1>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/admin/approveSavings" style="text-decoration: none;">
+                        <div class="card">
+                            <div class="card-body" style="color: #000">
+                                <h5 class="card-title">Total Savings Application Due</h5>
+                                <h1 class="card-text">
+                                    @if ($savings_application == 0)
+                                        No Savings Applications
+                                    @else
+                                        {{ $savings_application }}
+                                    @endif
+                                </h1>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
           </main>

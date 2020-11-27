@@ -36,7 +36,8 @@ class CreateLoansTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
         });
 
         Schema::create('employee_loans', function (Blueprint $table) {
@@ -61,7 +62,8 @@ class CreateLoansTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
         });
 
         Schema::create('edu_loans', function (Blueprint $table) {
@@ -85,15 +87,16 @@ class CreateLoansTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
         });
 
         Schema::create('garantors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('loan_id');
-            $table->string('loan_method');
-            $table->string('g_name');
-            $table->string('g_mobile_number');
+            $table->unsignedBigInteger('loan_id')->nullable();
+            $table->string('loan_method')->nullable();
+            $table->string('g_name')->nullable();
+            $table->string('g_mobile_number')->nullable();
             $table->boolean('g_approved')->default(0);
             $table->timestamps();
         });
