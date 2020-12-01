@@ -45,10 +45,10 @@
                                 <li class="mt-5">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="/admin/approveEduLoan/loan/{{ $user->id }}/{{ $user->token }}" class="btn btn-sm btn-success">Approve</a>
+                                            <a href="/admin/approveEduLoan/loan/{{ $user->user_id }}/{{ $user->token }}" class="btn btn-sm btn-success">Approve</a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="/admin/rejectEduloan/loan/{{ $user->id }}/{{ $user->token }}" class="btn btn-sm btn-danger">Reject</a>
+                                            <a href="/admin/rejectEduloan/loan/{{ $user->user_id }}/{{ $user->token }}" class="btn btn-sm btn-danger">Reject</a>
                                         </div>
                                     </div>
                                 </li>

@@ -56,11 +56,13 @@ class ServiceCharge extends Command
             $user_id = $user->id;
             Log::info(print_r($user_id, true));
             $total = 0;
+
             if($user->hasSavings() == $user->id) {
                 $service_charges = new ServiceChrg();
                 $saving = SavingAcount::where('user_id', $user->id)
                     ->latest()
                     ->first();
+
                 $saving->total = $saving->total - 20;
                 $saving->save();
 
@@ -81,7 +83,7 @@ class ServiceCharge extends Command
                 }   else {
                     $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
                     $accounts->total_service_charge = 20 + $prev_fees->total_service_charge;
-                    $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
+                    $accounts->total = $prev_fees->total_service_charge + $prev_fees->total_default_charge + $prev_fees->total_fee;
                 }
 
                 $accounts->save();

@@ -20,6 +20,7 @@
                     <th>Total Service Charge</th>
                     <th>Total Default Charge</th>
                     <th>Total Loan Processing Fee</th>
+                    <th>Total</th>
                     <th>Date</th>
                   </tr>
                 </thead>
@@ -38,6 +39,7 @@
                     <td>{{ $user->total_service_charge }}</td>
                     <td>{{ $user->total_default_charge }}</td>
                     <td>{{ $user->total_fee }}</td>
+                    <td>{{ $user->total }}</td>
                     <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                   </tr>
                   @endif

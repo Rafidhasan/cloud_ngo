@@ -527,8 +527,8 @@ class AdminController extends Controller
                 $accounts->total = $accounts->total_fee;
             }   else {
                 $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
-                $accounts->total_fee = $request->fee + $prev_amount->total_fees;
-                $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
+                $accounts->total_fee = $loan->fee + $prev_fees->total_fee;
+                $accounts->total = $loan->fee + $prev_fees->total_fee + $prev_fees->total_service_charge + $prev_fees->total_default_charge;
             }
 
             $accounts->save();
@@ -817,7 +817,6 @@ class AdminController extends Controller
         }   else {
             $prev_fees = Accounts::where('user_id', $request->id)->latest()->first();
             $accounts->total_fee = $request->fee + $prev_fees->total_fees;
-            dd('ami ekhane');
             $accounts->total = $request->fee + $request->total_fee + $request->total_service_charge + $request->total_default_charge;
             $accounts->save();
         }

@@ -118,8 +118,8 @@ class DefaultCharge extends Command
                             $accounts->total = 20;
                         }   else {
                             $prev_fees = Accounts::where('user_id', $user->id)->latest()->first();
-                            $accounts->total_default_charge = 20 + $prev_amount->total_default_charge;
-                            $accounts->total = $accounts->total_service_charge + $accounts->total_default_charge + $accounts->total_fee;
+                            $accounts->total_default_charge = 20 + $prev_fees->total_default_charge;
+                            $accounts->total = $prev_fees->total_service_charge + $prev_fees->total_default_charge + $prev_fees->total_fee;
                         }
 
                         $accounts->save();
