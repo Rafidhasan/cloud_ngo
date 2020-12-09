@@ -3756,7 +3756,6 @@ class LoanInstallmentController extends Controller
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
-                    dd('ami second');
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
                     }   else {

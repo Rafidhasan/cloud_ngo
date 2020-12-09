@@ -20,7 +20,7 @@
                         </select>
                     </div>
 
-                    <a id="routeController" class="site-btn"  href="#">Next</a>
+                    <a id="routeController" class="site-btn"  href="/business_loan">Next</a>
                     <script>
                         const selectElement = document.getElementById("method");
                             selectElement.addEventListener('change', function (event)  {
