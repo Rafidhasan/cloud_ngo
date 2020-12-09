@@ -332,18 +332,21 @@ class UserRecordController extends Controller
         $business_loans = DB::table('users')
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
             ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('users')
             ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
             ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 
         $edu_loans = DB::table('users')
             ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
             ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 
