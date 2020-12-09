@@ -121,6 +121,10 @@ class LoanController extends Controller
 
                                 $garantor->g_name = $g_name;
                                 $garantor->g_mobile_number = $g_number;
+
+                                $garantor_id = User::where('mobile_number', $g_number)->first();
+                                $garantor->user_id = $garantor_id->id;
+
                                 $garantor->save();
                             }
                             return redirect('/')->with('status', 'Wait for Garantor and Admin to approve. Your Loan Processing fee '. $fee .'TK is succesfully deducted from your savings');
@@ -185,6 +189,10 @@ class LoanController extends Controller
 
                             $garantor->g_name = $g_name;
                             $garantor->g_mobile_number = $g_number;
+
+                            $garantor_id = User::where('mobile_number', $g_number)->first();
+                            $garantor->user_id = $garantor_id->id;
+
                             $garantor->save();
                         }
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');
@@ -245,6 +253,10 @@ class LoanController extends Controller
 
                             $garantor->g_name = $g_name;
                             $garantor->g_mobile_number = $g_number;
+
+                            $garantor_id = User::where('mobile_number', $g_number)->first();
+                            $garantor->user_id = $garantor_id->id;
+
                             $garantor->save();
                         }
                         return redirect('/')->with('status', 'Wait for Garantor and Admin to approve');

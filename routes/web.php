@@ -157,15 +157,15 @@ Route::post('/edu_loan/{id}', 'LoanController@educationLoanCreate');
 Route::get('/loans/{id}', 'userDashboard@showLoans');
 
 // Gaurantor loan routes
-Route::get('/g_loan/business/accept/{id}/{token}/{loan_id}', 'userDashboard@g_acceptB');
-Route::get('/g_loan/emp/accept/{id}/{token}', 'userDashboard@g_acceptEm');
-Route::get('/g_loan/edu/accept/{id}/{token}', 'userDashboard@g_acceptEd');
+Route::get('/g_loan/business/accept/{id}/{loan_id}', 'userDashboard@g_acceptB');
+Route::get('/g_loan/emp/accept/{id}', 'userDashboard@g_acceptEm');
+Route::get('/g_loan/edu/accept/{id}', 'userDashboard@g_acceptEd');
 Route::get('/g_loan/reject/{id}', 'userDashboard@g_reject');
 
 // user fill Loan installment form routes
-Route::get('/loans/singleShowLoanEdu/{id}/{token}', 'LoanInstallmentController@eduLoanInstallmentIndex');
-Route::get('/loans/singleShowLoanEmployee/{id}/{token}', 'LoanInstallmentController@employeeLoanInstallmentIndex');
-Route::get('/loans/singleShowLoanBusiness/{id}/{token}', 'LoanInstallmentController@businessLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanEdu/{id}', 'LoanInstallmentController@eduLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanEmployee/{id}', 'LoanInstallmentController@employeeLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanBusiness/{id}', 'LoanInstallmentController@businessLoanInstallmentIndex');
 
 Route::post('/loan_installment/{id}/{token}', 'LoanInstallmentController@create');
 

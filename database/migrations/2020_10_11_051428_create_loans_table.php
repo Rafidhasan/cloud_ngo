@@ -93,12 +93,17 @@ class CreateLoansTable extends Migration
 
         Schema::create('garantors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('loan_id')->nullable();
             $table->string('loan_method')->nullable();
             $table->string('g_name')->nullable();
             $table->string('g_mobile_number')->nullable();
             $table->boolean('g_approved')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 

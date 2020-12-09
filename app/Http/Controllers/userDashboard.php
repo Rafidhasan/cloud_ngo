@@ -71,30 +71,26 @@ class userDashboard extends Controller
 
     public function approvedLoans() {
         $edu_loans = DB::table('users')
-            ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
-            ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
-            ->where('edu_loans.g_approved', '=', 0)
-            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->join('garantors', 'users.id', '=', 'garantors.user_id')
+            ->where('garantors.g_approved', 0)
             ->where('garantors.loan_method', 'edu_loan')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('users')
-            ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
-            ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
-            ->where('employee_loans.g_approved', '=', 0)
-            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->join('garantors', 'users.id', '=', 'garantors.user_id')
+            ->where('garantors.g_approved', 0)
             ->where('garantors.loan_method', 'employee_loan')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 
         $business_loans = DB::table('users')
-            ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
-            ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
-            ->where('business_loans.g_approved', '=', 0)
-            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
-            ->where('garantors.g_mobile_number', '=', Auth::user()->mobile_number)
+            ->join('garantors', 'users.id', '=', 'garantors.user_id')
+            ->where('garantors.g_approved', 0)
             ->where('garantors.loan_method', 'business_loan')
+            ->where('garantors.user_id', Auth::user()->id)
             ->get()
             ->toArray();
 

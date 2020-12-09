@@ -15,10 +15,6 @@
                     <th>Method</th>
                     <th>Name</th>
                     <th>Mobile Number</th>
-                    <th>Amount</th>
-                    <th>Installments</th>
-                    <th>Per Installment Amount</th>
-                    <th>Fee</th>
                     <th>Garantor Name</th>
                     <th>Garantor Account No</th>
                     <th>Accept</th>
@@ -30,20 +26,10 @@
                 <tr>
                     <td>{{ $key+1 }}</td>
                     <td>
-                        @if (isset($user->business_name))
-                            Business Loan
-                        @elseif (isset($user->office_no))
-                            Employee Loan
-                        @else
-                            Education Loan
-                        @endif
+                        {{ $user->loan_method }}
                     </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->mobile_number }}</td>
-                    <td>{{ $user->amount }}</td>
-                    <td>{{ $user->installments }}</td>
-                    <td>{{ $user->perInstallmentAmount }}</td>
-                    <td>{{ $user->fee }}</td>
                     <td>
                         @if (isset($user->g_name))
                             <a href="/admin/showGProfile/{{ $user->g_mobile_number }}">{{ $user->g_name }}</a>
@@ -59,21 +45,21 @@
                         @endif
                     </td>
                     <td>
-                        @if (isset($user->business_name))
-                        <a href="/g_loan/business/accept/{{ $user->user_id }}/{{ $user->token }}/{{ $user->loan_id }}">Accept</a>
-                        @elseif (isset($user->office_no))
-                            <a href="/g_loan/emp/accept/{{ $user->user_id }}/{{ $user->token }}">Accept</a>
+                        @if ($user->loan_method == 'business_loan')
+                        <a href="/g_loan/business/accept/{{ $user->user_id }}/{{ $user->loan_id }}">Accept</a>
+                        @elseif ($user->loan_method == 'employee_loan')
+                            <a href="/g_loan/emp/accept/{{ $user->user_id }}">Accept</a>
                         @else
-                            <a href="/g_loan/edu/accept/{{ $user->user_id }}/{{ $user->token }}">Accept</a>
+                            <a href="/g_loan/edu/accept/{{ $user->user_id }}">Accept</a>
                         @endif
                     </td>
                     <td>
                         @if (isset($user->business_name))
-                            <a href="/g_loan/business/reject/{{ $user->user_id }}/{{ $user->token }}">Reject</a>
+                            <a href="/g_loan/business/reject/{{ $user->user_id }}">Reject</a>
                         @elseif (isset($user->office_no))
-                            <a href="/g_loan/emp/reject/{{ $user->user_id }}/{{ $user->token }}">Reject</a>
+                            <a href="/g_loan/emp/reject/{{ $user->user_id }}">Reject</a>
                         @else
-                            <a href="/g_loan/edu/reject/{{ $user->user_id }}/{{ $user->token }}">Reject</a>
+                            <a href="/g_loan/edu/reject/{{ $user->user_id }}">Reject</a>
                         @endif
                     </td>
                 </tr>

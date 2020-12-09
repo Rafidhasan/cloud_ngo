@@ -319,6 +319,8 @@ class UserRecordController extends Controller
         $users = DB::table('users')
             ->join('accounts', 'users.id', '=', 'accounts.user_id')
             ->join('saving_acounts', 'users.id', '=', 'saving_acounts.user_id')
+            ->where('users.id', Auth::user()->id)
+            ->where('saving_acounts.user_id', Auth::user()->id)
             ->get();
 
         return view('user.dashboard.accounts', [
