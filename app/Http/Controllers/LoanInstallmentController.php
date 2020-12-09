@@ -2719,7 +2719,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if($temp->lte(Carbon::now()->startOfMonth()->addMonth(1)) || ($total_amount >= $user[0]['perInstallmentAmount'])) {
@@ -2737,7 +2738,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 2
                         ]);
                     }   else {
                         if($latest->net_amount == 0) {
@@ -2756,7 +2758,8 @@ class LoanInstallmentController extends Controller
                                     'starting_date' => $staring_date,
                                     'ending' => $ending,
                                     'next_month' => $next_month,
-                                    'next_month_date' => $next_month_date
+                                    'next_month_date' => $next_month_date,
+                                    'month_no' => 2
                                 ]);
                             }   else {
                                 dd('logic');
@@ -2784,7 +2787,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -2805,7 +2809,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -2828,7 +2833,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else {
@@ -2836,6 +2842,7 @@ class LoanInstallmentController extends Controller
                 }
             }
         }   else if($installment == 4) {
+
             $date = Carbon::create($user[0]['created_at']);
 
             $ending = date('d-m-Y', strtotime($date->addMonth($user[0]['installments'])));
@@ -2854,7 +2861,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -2875,7 +2883,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -2898,7 +2907,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -2919,7 +2929,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else {
@@ -2945,7 +2956,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -2966,7 +2978,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -2989,7 +3002,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3010,7 +3024,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3030,7 +3045,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }  else {
@@ -3057,7 +3073,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -3078,7 +3095,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -3101,7 +3119,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3122,7 +3141,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3142,7 +3162,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
@@ -3162,7 +3183,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 6
                         ]);
                     }
                 }  else {
@@ -3188,7 +3210,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -3211,7 +3234,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }
                     }
@@ -3232,7 +3256,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3253,7 +3278,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3273,7 +3299,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
@@ -3293,7 +3320,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 6
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
@@ -3313,7 +3341,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 7
                         ]);
                     }
 
@@ -3340,7 +3369,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -3361,7 +3391,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -3384,7 +3415,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3405,7 +3437,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3425,7 +3458,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
@@ -3445,7 +3479,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 6
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
@@ -3465,7 +3500,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 7
                         ]);
                     }
 
@@ -3486,7 +3522,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 8
                         ]);
                     }
                 }  else {
@@ -3512,7 +3549,8 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
@@ -3533,7 +3571,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -3556,7 +3595,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3577,7 +3617,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3597,7 +3638,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
@@ -3617,7 +3659,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 6
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
@@ -3637,7 +3680,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 7
                         ]);
                     }
 
@@ -3658,7 +3702,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 8
                         ]);
                     }
                 }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
@@ -3679,7 +3724,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 9
                         ]);
                     }
                 }  else {
@@ -3687,8 +3733,8 @@ class LoanInstallmentController extends Controller
                 }
             }
         }   else if($installment == 10) {
-            $date = Carbon::create($user[0]['created_at']);
 
+            $date = Carbon::create($user[0]['created_at']);
             $ending = date('d-m-Y', strtotime($date->addMonth($user[0]['installments'])));
 
             if(($total_amount < $user[0]['perInstallmentAmount']) || $temp->startOfMonth()->lte(Carbon::now()->startOfMonth())) {
@@ -3705,11 +3751,12 @@ class LoanInstallmentController extends Controller
                     'starting_date' => $staring_date,
                     'ending' => $ending,
                     'next_month' => $next_month,
-                    'next_month_date' => $next_month_date
+                    'next_month_date' => $next_month_date,
+                    'month_no' => 1
                 ]);
             }   else {
                 if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(1)->lte(Carbon::now()->startOfMonth()) || ($total_amount >= $user[0]['perInstallmentAmount'] && $total_amount < $user[0]['perInstallmentAmount']*2)) {
-                    //For Second Month
+                    dd('ami second');
                     if($latest->net_amount == 0) {
                         return redirect()->with('status','Your loan is completed');
                     }   else {
@@ -3726,7 +3773,8 @@ class LoanInstallmentController extends Controller
                                 'starting_date' => $staring_date,
                                 'ending' => $ending,
                                 'next_month' => $next_month,
-                                'next_month_date' => $next_month_date
+                                'next_month_date' => $next_month_date,
+                                'month_no' => 2
                             ]);
                         }   else {
                             dd('logic');
@@ -3749,7 +3797,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 3
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(3)->lte(Carbon::now()->startOfMonth()) || ($total_amount = $user[0]['perInstallmentAmount']*3 && $total_amount < $user[0]['perInstallmentAmount']*4)) {
@@ -3770,7 +3819,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 4
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(4)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*4 && $total_amount < $user[0]['perInstallmentAmount']*5)){
@@ -3790,7 +3840,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 5
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(5)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*5 && $total_amount < $user[0]['perInstallmentAmount']*6)) {
@@ -3810,7 +3861,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 6
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(6)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*6 && $total_amount < $user[0]['perInstallmentAmount']*7)) {
@@ -3830,7 +3882,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 7
                         ]);
                     }
 
@@ -3851,7 +3904,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 8
                         ]);
                     }
                 }    else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(8)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*8 && $total_amount < $user[0]['perInstallmentAmount']*9)) {
@@ -3872,7 +3926,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 9
                         ]);
                     }
                 }   else if(Carbon::create($user[0]['approved_date'])->startOfMonth()->addMonth(9)->lte(Carbon::now()->startOfMonth()) || ($total_amount <= $user[0]['perInstallmentAmount']*9 && $total_amount < $user[0]['perInstallmentAmount']*10)) {
@@ -3892,7 +3947,8 @@ class LoanInstallmentController extends Controller
                             'starting_date' => $staring_date,
                             'ending' => $ending,
                             'next_month' => $next_month,
-                            'next_month_date' => $next_month_date
+                            'next_month_date' => $next_month_date,
+                            'month_no' => 10
                         ]);
                     }
                 }  else {
@@ -3925,8 +3981,10 @@ class LoanInstallmentController extends Controller
 
         $users = array_merge($edu_loans, $employee_loans, $business_loans);
 
-        $this_month = Carbon::create($users[0]['approved_date'])->startOfMonth()->modify('+1 month');
-        $next_month = $this_month->startOfMonth()->modify('+1 month');
+        $next_month_no = $request->month_no+1;
+
+        $this_month = Carbon::create($users[0]['approved_date'])->startOfMonth()->modify('+'.$request->month_no.' month');
+        $next_month = Carbon::create($users[0]['approved_date'])->startOfMonth()->modify('+'.$next_month_no.' month');
 
         $user = User::where('mobile_number',$request->phone_number)->first();
         if($user == "") {
@@ -3949,7 +4007,7 @@ class LoanInstallmentController extends Controller
                 $loan->mobile_number = $request->phone_number;
                 $loan->amount = $request->amount;
 
-                $loan->this_month = $request->month;
+                $loan->this_month = $this_month;
                 $loan->next_month = $next_month;
 
                 $loan->save();

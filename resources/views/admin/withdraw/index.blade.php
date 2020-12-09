@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-striped table-sm">
-                            <h2>Admin Withdraw Form -  <spanc>Total Accounts - {{ $total }} TK</span></h2><br>
+                            <h2>Admin Withdraw Form -  <spanc>Total Accounts - {{ $total->total }} TK</span></h2><br>
                             <a class="btn btn-primary" href="/admin/prev-withdraws">Previous Withdraws</a>
                             <br><br>
                             <form method="post" action="/admin/withdraw/create/{{ Auth::user()->id }}">

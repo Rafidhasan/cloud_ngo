@@ -17,7 +17,7 @@
                 <li><h5><a href="/prev_loan_details/{{ $user[0]['id'] }}">Check Previous Loan payment</a></li></h5>
                 <li><h5>Paying for {{ $next_month }}. Last date - {{ $next_month_date }}</h5></li>
             </ul>
-            <form method="post" action="/first_loan_installment/{{ $user[0]['id'] }}/{{ $user[0]['token'] }}/{{ $next_month_date }}/{{ $user[0]["amount"] }}">
+            <form method="post" action="/first_loan_installment/{{ $user[0]['id'] }}/{{ $user[0]['token'] }}/{{ $next_month_date }}/{{ $user[0]["amount"] }}/{{ $month_no }}">
                 @csrf
                 <div class="form-group">
                     <label class="text-white">Payment Method</label>

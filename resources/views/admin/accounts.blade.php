@@ -44,7 +44,7 @@
                   </tr>
                   @endif
                 @endforeach
-                <tr><strong style="font-size: 2em">Grand Total: <span style="color: dodgerblue">{{ $total }} TK</span></strong></tr><br>
+                <tr><strong style="font-size: 2em">Grand Total: <span style="color: dodgerblue">{{ $total->total }} TK</span></strong></tr><br>
                 </tbody>
               </table>
             </div>

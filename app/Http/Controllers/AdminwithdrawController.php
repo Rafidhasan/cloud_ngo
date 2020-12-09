@@ -20,9 +20,7 @@ class AdminwithdrawController extends Controller
 
         $total = 0;
 
-        foreach($users as $user) {
-            $total += $user->total_fee + $user->total_service_charge + $user->total_default_charge;
-        }
+        $total = DB::table('accounts')->latest()->first();
 
         return view('admin.withdraw.index' ,[
             'total' => $total
@@ -47,6 +45,13 @@ class AdminwithdrawController extends Controller
             $saving = SavingAcount::where('user_id', Auth::user()->id)->latest()->first();
             $saving->total = $saving->total - $request->amount;
             $saving->save();
+
+            $accounts = new Accounts();
+            $accounts->user_id = Auth::user()->id;
+            $prev_fees = Accounts::latest()->first();
+            $accounts->total = $prev_fees->total - $request->amount;
+
+            $accounts->save();
 
             return redirect('admin')->with('status', 'Withdraw is completed');
         }   else {

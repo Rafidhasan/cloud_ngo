@@ -169,7 +169,7 @@ Route::get('/loans/singleShowLoanBusiness/{id}/{token}', 'LoanInstallmentControl
 
 Route::post('/loan_installment/{id}/{token}', 'LoanInstallmentController@create');
 
-Route::post('/first_loan_installment/{id}/{token}/{month}/{total}', "LoanInstallmentController@firstStore");
+Route::post('/first_loan_installment/{id}/{token}/{month}/{total}/{month_no}', "LoanInstallmentController@firstStore");
 Route::get('/prev_loan_details/{id}', 'LoanInstallmentController@showPrevLoanInstallments');
 
 // withdraw form routes

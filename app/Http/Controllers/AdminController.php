@@ -753,9 +753,7 @@ class AdminController extends Controller
 
         $total = 0;
 
-        foreach($users as $user) {
-            $total += $user->total_fee + $user->total_service_charge + $user->total_default_charge;
-        }
+        $total = Accounts::latest()->first();
 
         return view('admin.accounts', [
             'users' => $users,
