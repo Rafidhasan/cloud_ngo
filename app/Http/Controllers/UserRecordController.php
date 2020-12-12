@@ -14,6 +14,10 @@ use App\ForgetUser;
 use App\SavingAcount;
 use App\UserNotification;
 
+use App\Garantor;
+
+use App\BusinessLoan;
+
 use DB;
 
 use App\User;
@@ -329,24 +333,28 @@ class UserRecordController extends Controller
     }
 
     public function garantorList() {
+        $business_loan = BusinessLoan::select('id')->where('user_id', Auth::user()->id)->latest()->first();
+        $employee_loan = EmployeeLoan::select('id')->where('user_id', Auth::user()->id)->latest()->first();
+        $edu_loan = EduLoan::select('id')->where('user_id', Auth::user()->id)->latest()->first();
+
         $business_loans = DB::table('users')
             ->join('business_loans', 'users.id', '=', 'business_loans.user_id')
             ->join('garantors', 'business_loans.id', '=', 'garantors.loan_id')
-            ->where('garantors.user_id', Auth::user()->id)
+            ->where('garantors.loan_id', $business_loan->id)
             ->get()
             ->toArray();
 
         $employee_loans = DB::table('users')
             ->join('employee_loans', 'users.id', '=', 'employee_loans.user_id')
             ->join('garantors', 'employee_loans.id', '=', 'garantors.loan_id')
-            ->where('garantors.user_id', Auth::user()->id)
+            ->where('garantors.user_id', $employee_loan->id)
             ->get()
             ->toArray();
 
         $edu_loans = DB::table('users')
             ->join('edu_loans', 'users.id', '=', 'edu_loans.user_id')
             ->join('garantors', 'edu_loans.id', '=', 'garantors.loan_id')
-            ->where('garantors.user_id', Auth::user()->id)
+            ->where('garantors.user_id', $edu_loan->id)
             ->get()
             ->toArray();
 

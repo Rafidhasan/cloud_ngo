@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -68,15 +70,7 @@ class User extends Authenticatable
         return $this->savings->flatten()->pluck('total')->last();
     }
 
-    public function hasBusinessLoans() {
-        return $this->businessLoans->flatten()->pluck('user_id')->last();
-    }
-
-    public function hasEmployeeLoans() {
-        return $this->employeeLoans->flatten()->pluck('user_id')->last();
-    }
-
-    public function hasEduLoans() {
-        return $this->eduLoans->flatten()->pluck('user_id')->last();
+    public function businessLoanId() {
+        return $this->businessLoans;
     }
 }
