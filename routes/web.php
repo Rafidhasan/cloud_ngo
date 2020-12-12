@@ -165,7 +165,7 @@ Route::get('/g_loan/reject/{id}', 'userDashboard@g_reject');
 // user fill Loan installment form routes
 Route::get('/loans/singleShowLoanEdu/{id}', 'LoanInstallmentController@eduLoanInstallmentIndex');
 Route::get('/loans/singleShowLoanEmployee/{id}', 'LoanInstallmentController@employeeLoanInstallmentIndex');
-Route::get('/loans/singleShowLoanBusiness/{id}', 'LoanInstallmentController@businessLoanInstallmentIndex');
+Route::get('/loans/singleShowLoanBusiness/{id}/{token}', 'LoanInstallmentController@businessLoanInstallmentIndex');
 
 Route::post('/loan_installment/{id}/{token}', 'LoanInstallmentController@create');
 
